@@ -37,13 +37,15 @@ public class MasterServer {
                 String command = splittedStr[0];
                 switch (command) {
                     case ActionTypes.REQUEST_RENTAL:
+                        SlaveQueryRentals slaveQueryAppartments = null;
                         if (splittedStr.length == 2) {
-                            SlaveQueryAppartments slaveQueryAppartments =
-                                    new SlaveQueryAppartments(socket.getOutputStream(), splittedStr[1]);
+                            slaveQueryAppartments =
+                                    new SlaveQueryRentals(socket.getOutputStream(), splittedStr[1]);
                         } else {
-                            SlaveQueryAppartments slaveQueryAppartments =
-                                    new SlaveQueryAppartments(socket.getOutputStream(), splittedStr[2]);
+                            slaveQueryAppartments =
+                                    new SlaveQueryRentals(socket.getOutputStream(), splittedStr[2]);
                         }
+                        service.submit(slaveQueryAppartments);
                         break;
                 }
 

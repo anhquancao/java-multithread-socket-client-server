@@ -1,28 +1,26 @@
 package server;
 
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 
 /**
  * Created by caoquan on 4/4/17.
  */
-public class SlaveQueryAppartments extends SlaveQuery {
+public class SlaveQueryRentals extends SlaveQuery {
     private String criteria;
     private int value;
-    private OutputStreamWriter writer;
 
     public static final String ALL = "ALL";
     public static final String RENT = "RENT";
     public static final String ROOM = "ROOM";
 
 
-    public SlaveQueryAppartments(OutputStream outputStream, String criteria, int value) {
+    public SlaveQueryRentals(OutputStream outputStream, String criteria, int value) {
         super(outputStream);
         this.criteria = criteria;
         this.value = value;
     }
 
-    public SlaveQueryAppartments(OutputStream outputStream, String criteria) {
+    public SlaveQueryRentals(OutputStream outputStream, String criteria) {
         super(outputStream);
         this.criteria = criteria;
     }

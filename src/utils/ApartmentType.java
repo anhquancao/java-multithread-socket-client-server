@@ -5,5 +5,5 @@ package utils;
  */
 public enum ApartmentType {
     DUPLEX,
-    CHAMBRE, LOFT, AUTRE
+    ROOM, LOFT, OTHER
 }
