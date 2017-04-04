@@ -4,5 +4,5 @@ package utils;
  * Created by caoquan on 4/4/17.
  */
 public enum RentalStatus {
-    RENTING, RETURNED
+    AVAILABLE, RENTING, RETURNED
 }

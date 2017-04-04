@@ -31,15 +31,20 @@ public class MasterServer {
         while (true) {
             try {
                 Socket socket = serverSocket.accept();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), "8859_1"));
                 String input = reader.readLine();
                 String[] splittedStr = input.split(" ");
                 String command = splittedStr[0];
                 switch (command) {
-                    case ActionTypes.REQUEST_APPARTMENTS:
-
+                    case ActionTypes.REQUEST_RENTAL:
+                        if (splittedStr.length == 2) {
+                            SlaveQueryAppartments slaveQueryAppartments =
+                                    new SlaveQueryAppartments(socket.getOutputStream(), splittedStr[1]);
+                        } else {
+                            SlaveQueryAppartments slaveQueryAppartments =
+                                    new SlaveQueryAppartments(socket.getOutputStream(), splittedStr[2]);
+                        }
                         break;
-
                 }
 
             } catch (IOException e) {
