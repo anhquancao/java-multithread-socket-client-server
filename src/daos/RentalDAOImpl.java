@@ -19,6 +19,7 @@ public class RentalDAOImpl implements RentalDAO {
 
     @Override
     public List<Rental> findAll() {
+
         return null;
     }
 

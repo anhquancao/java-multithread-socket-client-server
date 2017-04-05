@@ -1,7 +1,6 @@
 package daos;
 
 import models.Address;
-import models.Rental;
 
 import java.util.List;
 
@@ -15,7 +14,7 @@ public interface AddressDAO {
 
     boolean insertAddress(Address address);
 
-    boolean updateRental(Address address);
+    boolean updateAddress(Address address);
 
-    boolean deleteRental(Rental rental);
+    boolean deleteAddress(Address address);
 }

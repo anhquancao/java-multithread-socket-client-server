@@ -15,9 +15,12 @@ public class SQLiteJDBCDriverConnection {
 
     private SQLiteJDBCDriverConnection() {
         try {
+            Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection(Constant.DATABASE_URL);
             System.out.println("Connection to SQLite has been established.");
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }

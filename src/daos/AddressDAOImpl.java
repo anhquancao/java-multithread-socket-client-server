@@ -2,7 +2,6 @@ package daos;
 
 import database.SQLiteJDBCDriverConnection;
 import models.Address;
-import models.Rental;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -53,16 +52,16 @@ public class AddressDAOImpl implements AddressDAO {
     }
 
     @Override
-    public boolean updateRental(Address address) {
+    public boolean updateAddress(Address address) {
         return false;
     }
 
     @Override
-    public boolean deleteRental(Rental rental) {
+    public boolean deleteAddress(Address address) {
         return false;
     }
 
-    public static void main(String agrs[]){
+    public static void main(String agrs[]) {
         AddressDAO test = new AddressDAOImpl(SQLiteJDBCDriverConnection.getInstance().getConnection());
         test.findAll();
     }
