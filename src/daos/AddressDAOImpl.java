@@ -22,7 +22,7 @@ public class AddressDAOImpl implements AddressDAO {
 
     @Override
     public List<Address> findAll() {
-        String sql = "SELECT id, street, postal FROM address";
+        String sql = "SELECT * FROM address";
         List<Address> addresses = new ArrayList<>();
         try {
             PreparedStatement statement = connection.prepareStatement(sql);

@@ -10,6 +10,12 @@ public class Rental {
     private Apartment apartment;
     private Person tenant;
 
+    public Rental(RentalStatus status, Apartment apartment, Person tenant) {
+        this.status = status;
+        this.apartment = apartment;
+        this.tenant = tenant;
+    }
+
     public Rental(RentalStatus status, Apartment apartment) {
         this.status = status;
         this.apartment = apartment;
@@ -37,5 +43,14 @@ public class Rental {
 
     public Person getTenant() {
         return tenant;
+    }
+
+    @Override
+    public String toString() {
+        return "Rental{" +
+                "status=" + status +
+                "," + apartment +
+                "," + tenant +
+                '}';
     }
 }

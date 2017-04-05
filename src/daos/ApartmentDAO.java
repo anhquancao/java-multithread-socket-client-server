@@ -9,9 +9,9 @@ import java.util.List;
  * Created by caoquan on 4/5/17.
  */
 public interface ApartmentDAO {
-    List<Address> findAll();
+    List<Apartment> findAll();
 
-    List<Address> findById(int id);
+    List<Apartment> findById(int id);
 
     boolean insertApartment(Apartment apartment);
 
