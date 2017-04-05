@@ -5,12 +5,12 @@ package models;
  */
 public class Address {
     private int id;
-    private String address;
+    private String street;
     private int postalCode;
 
-    public Address(int id, String address, int postalCode) {
+    public Address(int id, String street, int postalCode) {
         this.id = id;
-        this.address = address;
+        this.street = street;
         this.postalCode = postalCode;
     }
 
@@ -18,8 +18,8 @@ public class Address {
         return id;
     }
 
-    public String getAddress() {
-        return address;
+    public String getStreet() {
+        return street;
     }
 
     public int getPostalCode() {
@@ -30,7 +30,7 @@ public class Address {
     public String toString() {
         return "Address{" +
                 "id=" + id +
-                ", address='" + address + '\'' +
+                ", address='" + street + '\'' +
                 ", postalCode=" + postalCode +
                 '}';
     }
