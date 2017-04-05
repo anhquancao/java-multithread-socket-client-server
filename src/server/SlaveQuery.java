@@ -1,5 +1,7 @@
 package server;
 
+import utils.Constant;
+
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
@@ -12,7 +14,7 @@ public class SlaveQuery extends Thread {
 
     public SlaveQuery(OutputStream outputStream) {
         try {
-            this.writer = new OutputStreamWriter(outputStream, "8859_1");
+            this.writer = new OutputStreamWriter(outputStream, Constant.CHARSET);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

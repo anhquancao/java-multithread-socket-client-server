@@ -17,10 +17,12 @@ import java.util.concurrent.Executors;
 public class MasterServer {
     private ServerSocket serverSocket;
     private ExecutorService service;
+    private int port;
 
     public MasterServer(int port) {
         try {
             serverSocket = new ServerSocket(port);
+            this.port = port;
             service = Executors.newFixedThreadPool(4);
         } catch (IOException e) {
             e.printStackTrace();
@@ -28,10 +30,12 @@ public class MasterServer {
     }
 
     public void start() {
+        System.out.println("Server is listen at " + port);
         while (true) {
             try {
                 Socket socket = serverSocket.accept();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), "8859_1"));
+                System.out.println("Accept");
+                BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), Constant.CHARSET));
                 String input = reader.readLine();
                 String[] splittedStr = input.split(" ");
                 String command = splittedStr[0];
@@ -43,7 +47,7 @@ public class MasterServer {
                                     new SlaveQueryRentals(socket.getOutputStream(), splittedStr[1]);
                         } else {
                             slaveQueryAppartments =
-                                    new SlaveQueryRentals(socket.getOutputStream(), splittedStr[2]);
+                                    new SlaveQueryRentals(socket.getOutputStream(), splittedStr[1], Integer.parseInt(splittedStr[2]));
                         }
                         service.submit(slaveQueryAppartments);
                         break;
@@ -57,6 +61,6 @@ public class MasterServer {
 
     public static void main(String args[]) {
         MasterServer server = new MasterServer(Constant.PORT);
-
+        server.start();
     }
 }

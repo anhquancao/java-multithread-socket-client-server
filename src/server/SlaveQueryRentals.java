@@ -1,6 +1,9 @@
 package server;
 
-import java.io.OutputStream;
+import actions.RequestRentalAction;
+import utils.Constant;
+
+import java.io.*;
 
 /**
  * Created by caoquan on 4/4/17.
@@ -8,16 +11,18 @@ import java.io.OutputStream;
 public class SlaveQueryRentals extends SlaveQuery {
     private String criteria;
     private int value;
-
-    public static final String ALL = "ALL";
-    public static final String RENT = "RENT";
-    public static final String ROOM = "ROOM";
+    private BufferedWriter writer;
 
 
     public SlaveQueryRentals(OutputStream outputStream, String criteria, int value) {
         super(outputStream);
         this.criteria = criteria;
         this.value = value;
+        try {
+            this.writer = new BufferedWriter(new OutputStreamWriter(outputStream, Constant.CHARSET));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 
     public SlaveQueryRentals(OutputStream outputStream, String criteria) {
@@ -28,11 +33,22 @@ public class SlaveQueryRentals extends SlaveQuery {
     @Override
     public void run() {
         switch (this.criteria) {
-            case ALL:
+            case RequestRentalAction.ALL:
+                System.out.println("all");
+                try {
+                    writer.write("Answer from server");
+                    writer.newLine();
+                    writer.write("All");
+                    writer.newLine();
+                    writer.flush();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 break;
-            case RENT:
+            case RequestRentalAction.RENT:
                 break;
-            case ROOM:
+            case RequestRentalAction.ROOM:
                 break;
         }
     }
