@@ -23,7 +23,7 @@ public class RentalDAOImpl implements RentalDAO {
     }
 
     @Override
-    public List<Rental> findById() {
+    public List<Rental> findById(int id) {
 
         return null;
     }
