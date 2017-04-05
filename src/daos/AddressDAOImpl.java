@@ -43,26 +43,84 @@ public class AddressDAOImpl implements AddressDAO {
 
     @Override
     public List<Address> findById(int id) {
-        return null;
+        String sql = "SELECT id, street, postal FROM address WHERE id = ?";
+        List<Address> addresses = new ArrayList<>();
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setInt(1, id);
+            ResultSet result = statement.executeQuery();
+
+            while (result.next()) {
+                Address newAddr = new Address(result.getInt("id"), result.getString("street"), result.getInt("postal"));
+                System.out.println(newAddr);
+                addresses.add(newAddr);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return addresses;
     }
 
     @Override
     public boolean insertAddress(Address address) {
-        return false;
+        String sql = "INSERT INTO address (street, postal) VALUES (?,?)";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, address.getStreet());
+            statement.setInt(2, address.getPostalCode());
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 
     @Override
     public boolean updateAddress(Address address) {
-        return false;
+        String sql = "UPDATE address SET street = ? , postal = ? WHERE id = ?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, address.getStreet());
+            statement.setInt(2, address.getPostalCode());
+            statement.setInt(3, address.getId());
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 
     @Override
     public boolean deleteAddress(Address address) {
-        return false;
+        String sql = "DELETE FROM address WHERE id = ?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, address.getId());
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 
     public static void main(String agrs[]) {
         AddressDAO test = new AddressDAOImpl(SQLiteJDBCDriverConnection.getInstance().getConnection());
         test.findAll();
+        test.findById(2);
+
+        Address newAddress = new Address(8,"Hanoi", 100000);
+//        Address newAddress2 = new Address(7, "Sai Gon", 250000);
+//        test.insertAddress(newAddress);
+//        test.findAll();
+//        test.updateAddress(newAddress2);
+//        test.findAll();
+        test.deleteAddress(newAddress);
+        test.findAll();
+
     }
 }
