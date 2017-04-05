@@ -1,6 +1,5 @@
 package server;
 
-import actions.ActionTypes;
 import utils.Constant;
 
 import java.io.BufferedReader;
@@ -14,13 +13,15 @@ import java.util.concurrent.Executors;
 /**
  * Created by caoquan on 4/4/17.
  */
-public class MasterServer {
+public class MasterAdministration extends Thread {
     private ServerSocket serverSocket;
     private ExecutorService service;
+    private int port;
 
-    public MasterServer(int port) {
+    public MasterAdministration(int port) {
         try {
             serverSocket = new ServerSocket(port);
+            this.port = port;
             service = Executors.newFixedThreadPool(4);
         } catch (IOException e) {
             e.printStackTrace();
@@ -28,25 +29,17 @@ public class MasterServer {
     }
 
     public void start() {
+        System.out.println("Server is listen at " + port);
         while (true) {
             try {
                 Socket socket = serverSocket.accept();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), "8859_1"));
+                System.out.println("Accept");
+                BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), Constant.CHARSET));
                 String input = reader.readLine();
                 String[] splittedStr = input.split(" ");
                 String command = splittedStr[0];
                 switch (command) {
-                    case ActionTypes.REQUEST_RENTAL:
-                        SlaveQueryRentals slaveQueryAppartments = null;
-                        if (splittedStr.length == 2) {
-                            slaveQueryAppartments =
-                                    new SlaveQueryRentals(socket.getOutputStream(), splittedStr[1]);
-                        } else {
-                            slaveQueryAppartments =
-                                    new SlaveQueryRentals(socket.getOutputStream(), splittedStr[2]);
-                        }
-                        service.submit(slaveQueryAppartments);
-                        break;
+                  
                 }
 
             } catch (IOException e) {
@@ -56,7 +49,7 @@ public class MasterServer {
     }
 
     public static void main(String args[]) {
-        MasterServer server = new MasterServer(Constant.PORT);
-
+        MasterAdministration server = new MasterAdministration(Constant.PORT);
+        server.start();
     }
 }
