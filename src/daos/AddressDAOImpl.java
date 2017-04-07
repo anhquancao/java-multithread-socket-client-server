@@ -22,7 +22,7 @@ public class AddressDAOImpl implements AddressDAO {
 
     @Override
     public List<Address> findAll() {
-        String sql = "SELECT id, street, postal FROM address";
+        String sql = "SELECT * FROM address";
         List<Address> addresses = new ArrayList<>();
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -30,7 +30,7 @@ public class AddressDAOImpl implements AddressDAO {
 
             while (result.next()) {
                 Address newAddr = new Address(result.getInt("id"), result.getString("street"), result.getInt("postal"));
-                System.out.println(newAddr);
+//                System.out.println(newAddr);
                 addresses.add(newAddr);
             }
 
@@ -53,7 +53,7 @@ public class AddressDAOImpl implements AddressDAO {
 
             while (result.next()) {
                 Address newAddr = new Address(result.getInt("id"), result.getString("street"), result.getInt("postal"));
-                System.out.println(newAddr);
+//                System.out.println(newAddr);
                 addresses.add(newAddr);
             }
 

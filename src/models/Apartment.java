@@ -13,6 +13,14 @@ public class Apartment {
     private Person renter;
     private ApartmentType type;
 
+    public Apartment(Address address, int numRooms, int monthlyRent, Person renter, ApartmentType type) {
+        this.address = address;
+        this.numRooms = numRooms;
+        this.monthlyRent = monthlyRent;
+        this.renter = renter;
+        this.type = type;
+    }
+
     public Apartment(int id, Address address, int numRooms, int monthlyRent, Person renter, ApartmentType type) {
         this.id = id;
         this.address = address;

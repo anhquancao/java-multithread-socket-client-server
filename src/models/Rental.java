@@ -6,9 +6,30 @@ import utils.RentalStatus;
  * Created by caoquan on 4/4/17.
  */
 public class Rental {
+    private int id;
     private RentalStatus status;
     private Apartment apartment;
     private Person tenant;
+
+    public Rental(Integer id, RentalStatus status, Apartment apartment, Person tenant) {
+
+        this.id = id;
+        this.status = status;
+        this.apartment = apartment;
+        this.tenant = tenant;
+    }
+
+    public Rental(Integer id, RentalStatus status, Apartment apartment) {
+        this.id = id;
+        this.status = status;
+        this.apartment = apartment;
+    }
+
+    public Rental(RentalStatus status, Apartment apartment, Person tenant) {
+        this.status = status;
+        this.apartment = apartment;
+        this.tenant = tenant;
+    }
 
     public Rental(RentalStatus status, Apartment apartment) {
         this.status = status;
@@ -27,6 +48,11 @@ public class Rental {
         this.tenant = tenant;
     }
 
+
+    public Integer getId() {
+        return id;
+    }
+
     public RentalStatus getStatus() {
         return status;
     }
@@ -37,5 +63,14 @@ public class Rental {
 
     public Person getTenant() {
         return tenant;
+    }
+
+    @Override
+    public String toString() {
+        return "Rental{" +
+                "status=" + status +
+                "," + apartment +
+                "," + tenant +
+                '}';
     }
 }
