@@ -30,7 +30,7 @@ public class AddressDAOImpl implements AddressDAO {
 
             while (result.next()) {
                 Address newAddr = new Address(result.getInt("id"), result.getString("street"), result.getInt("postal"));
-                System.out.println(newAddr);
+//                System.out.println(newAddr);
                 addresses.add(newAddr);
             }
 
@@ -53,7 +53,7 @@ public class AddressDAOImpl implements AddressDAO {
 
             while (result.next()) {
                 Address newAddr = new Address(result.getInt("id"), result.getString("street"), result.getInt("postal"));
-                System.out.println(newAddr);
+//                System.out.println(newAddr);
                 addresses.add(newAddr);
             }
 

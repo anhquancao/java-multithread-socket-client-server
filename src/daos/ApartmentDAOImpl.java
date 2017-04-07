@@ -30,7 +30,26 @@ public class ApartmentDAOImpl implements ApartmentDAO {
 
     @Override
     public List<Apartment> findAll() {
-        return null;
+        List<Apartment> apartments = new ArrayList<>();
+        String sql = "SELECT * FROM apartment";
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            ResultSet result = statement.executeQuery();
+            while (result.next()) {
+                Address newAddress = addressDAO.findById(result.getInt("address_id")).get(0);
+                Person newPerson = personDAO.findById(result.getInt("renter_id")).get(0);
+                Apartment newApartment = new Apartment(result.getInt("id"), newAddress, result.getInt("num_rooms"), result.getInt("monthly_rent"), newPerson, ApartmentType.valueOf(result.getString("type")));
+
+                apartments.add(newApartment);
+                System.out.println(newApartment);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return apartments;
     }
 
     @Override
@@ -60,23 +79,63 @@ public class ApartmentDAOImpl implements ApartmentDAO {
 
     @Override
     public boolean insertApartment(Apartment apartment) {
-        return false;
+        String sql = "INSERT INTO apartment (address_id, num_rooms, monthly_rent, renter_id, type) VALUES (?,?,?,?,?)";
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setInt(1, apartment.getAddress().getId());
+            statement.setInt(2, apartment.getNumRooms());
+            statement.setInt(3, apartment.getMonthlyRent());
+            statement.setInt(4, apartment.getRenter().getId());
+            statement.setString(5, apartment.getType().toString());
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 
     @Override
     public boolean updateApartment(Apartment apartment) {
-        return false;
+        String sql = "UPDATE apartment SET address_id = ?, num_rooms = ?, monthly_rent = ?, renter_id = ?, type = ?) WHERE id = ?";
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setInt(1, apartment.getAddress().getId());
+            statement.setInt(2, apartment.getNumRooms());
+            statement.setInt(3, apartment.getMonthlyRent());
+            statement.setInt(4, apartment.getRenter().getId());
+            statement.setString(5, apartment.getType().toString());
+            statement.setInt(6, apartment.getId());
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 
     @Override
     public boolean deleteAparment(Apartment apartment) {
-        return false;
+        String sql = "DELETE FROM address WHERE id = ?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, apartment.getId());
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 
     public static void main(String agrs[]) {
         Connection connection = SQLiteJDBCDriverConnection.getInstance().getConnection();
         ApartmentDAOImpl test = new ApartmentDAOImpl(connection, new AddressDAOImpl(connection), new PersonDAOImpl(connection));
-
         test.findById(2);
+        test.findAll();
     }
 }

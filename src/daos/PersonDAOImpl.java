@@ -42,7 +42,7 @@ public class PersonDAOImpl implements PersonDAO {
                     newPerson = new Tenant(result.getString("email"));
                 }
                 persons.add(newPerson);
-                System.out.println(newPerson);
+//                System.out.println(newPerson);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -70,7 +70,7 @@ public class PersonDAOImpl implements PersonDAO {
                     newPerson = new Tenant(result.getString("email"));
                 }
                 persons.add(newPerson);
-                System.out.println(newPerson);
+//                System.out.println(newPerson);
             }
         } catch (SQLException e) {
             e.printStackTrace();
