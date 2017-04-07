@@ -36,10 +36,10 @@ public class PersonDAOImpl implements PersonDAO {
             while (result.next()) {
                 Person newPerson = null;
                 if (result.getString("type").equalsIgnoreCase(PersonType.RENTER.toString())) {
-                    newPerson = new Renter(result.getString("email"));
+                    newPerson = new Renter(result.getInt("id"), result.getString("email"));
                 }
                 if (result.getString("type").equalsIgnoreCase(PersonType.TENANT.toString())) {
-                    newPerson = new Tenant(result.getString("email"));
+                    newPerson = new Tenant(result.getInt("id"), result.getString("email"));
                 }
                 persons.add(newPerson);
 //                System.out.println(newPerson);
@@ -64,10 +64,10 @@ public class PersonDAOImpl implements PersonDAO {
             while (result.next()) {
                 Person newPerson = null;
                 if (result.getString("type").equalsIgnoreCase(PersonType.RENTER.toString())) {
-                    newPerson = new Renter(result.getString("email"));
+                    newPerson = new Renter(result.getInt("id"), result.getString("email"));
                 }
                 if (result.getString("type").equalsIgnoreCase(PersonType.TENANT.toString())) {
-                    newPerson = new Tenant(result.getString("email"));
+                    newPerson = new Tenant(result.getInt("id"), result.getString("email"));
                 }
                 persons.add(newPerson);
 //                System.out.println(newPerson);

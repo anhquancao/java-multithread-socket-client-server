@@ -65,10 +65,10 @@ public class ApartmentDAOImpl implements ApartmentDAO {
             while (result.next()) {
                 Address newAddress = addressDAO.findById(result.getInt("address_id")).get(0);
                 Person newPerson = personDAO.findById(result.getInt("renter_id")).get(0);
-                Apartment newApartment = new Apartment(newAddress, result.getInt("num_rooms"), result.getInt("monthly_rent"), newPerson, ApartmentType.valueOf(result.getString("type")));
+                Apartment newApartment = new Apartment(result.getInt("id"), newAddress, result.getInt("num_rooms"), result.getInt("monthly_rent"), newPerson, ApartmentType.valueOf(result.getString("type")));
 
                 apartments.add(newApartment);
-                System.out.println(newApartment);
+//                System.out.println(newApartment);
             }
         } catch (SQLException e) {
             e.printStackTrace();
