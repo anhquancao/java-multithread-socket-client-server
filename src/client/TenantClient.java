@@ -38,7 +38,9 @@ public class TenantClient {
                 attempts++;
                 Thread.sleep(10);
             }
-            System.out.println("Attempts: " + attempts);
+            if (attempts == 1000) {
+                System.out.println("Request Timeout");
+            }
 
 //            String line = reader.readLine();
             while (reader.ready()) {
