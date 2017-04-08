@@ -17,4 +17,9 @@ public class UserInterface {
         System.out.print("Please choose 1, 2 or 3: ");
     }
 
+    public void showTenantMenu() {
+        showDelimiter();
+        System.out.println();
+    }
+
 }

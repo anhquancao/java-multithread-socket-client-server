@@ -15,21 +15,18 @@ public class SlaveQueryRentals extends SlaveQuery {
     private BufferedWriter writer;
     private RentalController rentalController;
 
-    public SlaveQueryRentals(OutputStream outputStream, String param1, int param2) {
+    public SlaveQueryRentals(OutputStream outputStream, String params) {
         super(outputStream);
-        this.param1 = param1;
-        this.param2 = param2;
+        String[] splittedParams = params.split(" ");
+        this.param1 = splittedParams[0];
+        this.param2 = Integer.parseInt(splittedParams[1]);
+
         this.rentalController = new RentalController();
         try {
             this.writer = new BufferedWriter(new OutputStreamWriter(outputStream, Constant.CHARSET));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-    }
-
-    public SlaveQueryRentals(OutputStream outputStream, String param1) {
-        super(outputStream);
-        this.param1 = param1;
     }
 
     @Override
