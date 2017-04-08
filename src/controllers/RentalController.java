@@ -10,29 +10,26 @@ import java.util.List;
 /**
  * Created by caoquan on 4/7/17.
  */
-public class RentalController {
+public class RentalController extends Controllers {
     RentalDAO rentalDAO;
-    private DAOFactory daoFactory;
 
     public RentalController() {
-        this.daoFactory = DefaultDAOFactory.getInstance();
+        super();
         this.rentalDAO = this.daoFactory.getRentalDAO();
     }
 
     public String requestAllAvailableRentals() {
         List<Rental> rentals = this.rentalDAO.findAllAvailable();
-        StringBuilder results = new StringBuilder();
-        for (Rental rental : rentals) {
-            results.append(rental + "\n");
-        }
-        return results.toString();
+        return renderResult(rentals);
     }
 
     public String requestRentalBelowRent(int rent) {
-        return "below rent";
+        List<Rental> rentals = this.rentalDAO.findAllBelow(rent);
+        return renderResult(rentals);
     }
 
     public String requestRenterByNumberOfRooms(int numberOfRooms) {
-        return "number of rooms";
+        List<Rental> rentals = this.rentalDAO.findAllNumberOfRoom(numberOfRooms);
+        return renderResult(rentals);
     }
 }

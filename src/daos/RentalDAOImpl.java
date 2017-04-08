@@ -122,12 +122,13 @@ public class RentalDAOImpl implements RentalDAO {
 
     @Override
     public List<Rental> findAllNumberOfRoom(int amount) {
-        String sql = "SELECT apartment_id, status, tenant_id FROM rental JOIN apartment ON rental.apartment_id = apartment.id WHERE apartment.num_rooms = ?";
+        String sql = "SELECT apartment_id, status, tenant_id FROM rental JOIN apartment ON rental.apartment_id = apartment.id WHERE apartment.num_rooms = ? AND rental.status = ?";
         List<Rental> rentals = new ArrayList<>();
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
 
             statement.setInt(1, amount);
+            statement.setString(2, RentalStatus.AVAILABLE.toString());
 
             ResultSet result = statement.executeQuery();
 
