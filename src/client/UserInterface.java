@@ -9,16 +9,16 @@ public class UserInterface {
     }
 
     public void showChooseOptions(int start, int end) {
-        StringBuilder stringBuilder = new StringBuilder();
+        StringBuilder stringBuilder = new StringBuilder("Please choose options ");
         for (int i = start; i < end; i++) {
             if (i == end - 1) {
                 stringBuilder.append(end - 1 + " or " + end);
             } else {
-                stringBuilder.append(1 + ", ");
+                stringBuilder.append(i + ", ");
             }
 
         }
-        System.out.println(stringBuilder);
+        System.out.println(stringBuilder.append(": "));
     }
 
     public void showMainMenu() {

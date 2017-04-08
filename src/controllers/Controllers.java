@@ -19,7 +19,7 @@ public abstract class Controllers {
         StringBuilder results = new StringBuilder();
         if (!ts.isEmpty()) {
             for (T t : ts) {
-                results.append(t);
+                results.append(t).append("\n");
             }
             return results.toString();
         } else {
