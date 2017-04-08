@@ -1,6 +1,7 @@
 package client;
 
 import actions.RequestRentalAction;
+import jdk.nashorn.internal.ir.RuntimeNode;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -21,6 +22,11 @@ public class ClientApplication {
 
     public void requestAllAvailableRentals() {
         RequestRentalAction requestRentalAction = new RequestRentalAction(RequestRentalAction.ALL);
+        client.doAction(requestRentalAction);
+    }
+
+    public void requestAllBelow(int amount) {
+        RequestRentalAction requestRentalAction = new RequestRentalAction(RequestRentalAction.RENT);
         client.doAction(requestRentalAction);
     }
 
@@ -66,6 +72,7 @@ public class ClientApplication {
 //        clientApplication.run();
         clientApplication.requestAllAvailableRentals();
 //        clientApplication.requestAllRentals();
+        clientApplication.requestAllBelow(1500);
 
     }
 }

@@ -10,15 +10,15 @@ import java.io.*;
  * Created by caoquan on 4/4/17.
  */
 public class SlaveQueryRentals extends SlaveQuery {
-    private String criteria;
-    private int value;
+    private String param1;
+    private int param2;
     private BufferedWriter writer;
     private RentalController rentalController;
 
-    public SlaveQueryRentals(OutputStream outputStream, String criteria, int value) {
+    public SlaveQueryRentals(OutputStream outputStream, String param1, int param2) {
         super(outputStream);
-        this.criteria = criteria;
-        this.value = value;
+        this.param1 = param1;
+        this.param2 = param2;
         this.rentalController = new RentalController();
         try {
             this.writer = new BufferedWriter(new OutputStreamWriter(outputStream, Constant.CHARSET));
@@ -27,14 +27,14 @@ public class SlaveQueryRentals extends SlaveQuery {
         }
     }
 
-    public SlaveQueryRentals(OutputStream outputStream, String criteria) {
+    public SlaveQueryRentals(OutputStream outputStream, String param1) {
         super(outputStream);
-        this.criteria = criteria;
+        this.param1 = param1;
     }
 
     @Override
     public void run() {
-        switch (this.criteria) {
+        switch (this.param1) {
             case RequestRentalAction.ALL:
                 System.out.println("all");
                 try {
@@ -48,6 +48,14 @@ public class SlaveQueryRentals extends SlaveQuery {
                 }
                 break;
             case RequestRentalAction.RENT:
+                String results = this.rentalController.requestRentalBelowRent(this.param2);
+                try {
+                    writer.write(results);
+                    writer.newLine();
+                    writer.flush();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 break;
             case RequestRentalAction.ROOM:
                 break;

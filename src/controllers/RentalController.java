@@ -29,7 +29,12 @@ public class RentalController {
     }
 
     public String requestRentalBelowRent(int rent) {
-        return "below rent";
+        List<Rental> rentals = this.rentalDAO.findAllBelow(rent);
+        StringBuilder results = new StringBuilder();
+        for (Rental rental : rentals) {
+            results.append(rental + "\n");
+        }
+        return results.toString();
     }
 
     public String requestRenterByNumberOfRooms(int numberOfRooms) {
