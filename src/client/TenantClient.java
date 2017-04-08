@@ -53,11 +53,4 @@ public class TenantClient {
             e.printStackTrace();
         }
     }
-
-    public static void main(String[] args) {
-        TestTenantClient testTenantClient = new TestTenantClient();
-        testTenantClient.requestAllRentals();
-        testTenantClient.requestAllRentals();
-
-    }
 }
