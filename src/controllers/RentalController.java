@@ -20,7 +20,7 @@ public class RentalController {
     }
 
     public String requestAllAvailableRentals() {
-        List<Rental> rentals = this.rentalDAO.findAll();
+        List<Rental> rentals = this.rentalDAO.findAllAvailable();
         StringBuilder results = new StringBuilder();
         for (Rental rental : rentals) {
             results.append(rental + "\n");

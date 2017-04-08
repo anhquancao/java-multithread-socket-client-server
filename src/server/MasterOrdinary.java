@@ -40,21 +40,13 @@ public class MasterOrdinary extends Thread {
                 String input = reader.readLine();
 
                 // parse command
-                String[] splittedStr = input.split(" ");
+                String[] splittedStr = input.split(" ", 2);
 
                 String command = splittedStr[0];
                 switch (command) {
                     case ActionTypes.REQUEST_RENTAL:
-                        SlaveQueryRentals slaveQueryAppartments = null;
-                        String param1 = splittedStr[1];
-                        int param2 = Integer.parseInt(splittedStr[2]);
-                        if (splittedStr.length == 2) {
-                            slaveQueryAppartments =
-                                    new SlaveQueryRentals(socket.getOutputStream(), param1);
-                        } else {
-                            slaveQueryAppartments =
-                                    new SlaveQueryRentals(socket.getOutputStream(), splittedStr[1], param2);
-                        }
+                        SlaveQueryRentals slaveQueryAppartments =
+                                new SlaveQueryRentals(socket.getOutputStream(), splittedStr[1]);
                         service.submit(slaveQueryAppartments);
                         break;
                 }
