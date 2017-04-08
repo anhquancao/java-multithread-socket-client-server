@@ -54,12 +54,43 @@ public class RentalDAOImpl implements RentalDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        return rentals;
+    }
+
+    @Override
+    public List<Rental> findAllAvailable() {
+        String sql = "SELECT * FROM rental WHERE status = ?";
+        List<Rental> rentals = new ArrayList<>();
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setString(1, RentalStatus.AVAILABLE.toString());
+
+            ResultSet result = statement.executeQuery();
+
+            while (result.next()) {
+                Rental newRental = null;
+                Apartment newApartment = apartmentDAO.findById(result.getInt("apartment_id")).get(0);
+                if (result.getInt("tenant_id") == 0) {
+                    newRental = new Rental(RentalStatus.valueOf(result.getString("status")), newApartment);
+                } else {
+                    Person newPerson = personDAO.findById(result.getInt("tenant_id")).get(0);
+                    newRental = new Rental(RentalStatus.valueOf(result.getString("status")), newApartment, newPerson);
+                }
+                System.out.println(newRental);
+                rentals.add(newRental);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         return rentals;
     }
 
     @Override
     public List<Rental> findAllBelow(int amount) {
-
         String sql = "SELECT * FROM rental JOIN apartment ON rental.apartment_id = apartment.id WHERE  monthly_rent < ?";
         List<Rental> rentals = new ArrayList<>();
         try {
@@ -85,6 +116,7 @@ public class RentalDAOImpl implements RentalDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return rentals;
     }
 
@@ -96,7 +128,7 @@ public class RentalDAOImpl implements RentalDAO {
             PreparedStatement statement = connection.prepareStatement(sql);
 
             statement.setInt(1, amount);
-            
+
             ResultSet result = statement.executeQuery();
 
             while (result.next()) {
@@ -115,6 +147,7 @@ public class RentalDAOImpl implements RentalDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return rentals;
     }
 
@@ -145,13 +178,13 @@ public class RentalDAOImpl implements RentalDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return rentals;
     }
 
     @Override
     public boolean insertRental(Rental rental) {
         String sql = "INSERT INTO rental (apartment_id,tenant_id,status) VALUES (?,?,?)";
-        List<Rental> rentals = new ArrayList<>();
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
 
@@ -163,13 +196,13 @@ public class RentalDAOImpl implements RentalDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return true;
     }
 
     @Override
     public boolean updateRental(Rental rental) {
         String sql = "UPDATE rental SET apartment_id = ?,tenant_id = ?,status = ? WHERE id = ?";
-        List<Rental> rentals = new ArrayList<>();
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
 
@@ -182,6 +215,7 @@ public class RentalDAOImpl implements RentalDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return true;
     }
 
@@ -196,7 +230,6 @@ public class RentalDAOImpl implements RentalDAO {
         }
 
         return true;
-
     }
 
     public static void main(String[] args) {
@@ -204,10 +237,12 @@ public class RentalDAOImpl implements RentalDAO {
         RentalDAOImpl test = new RentalDAOImpl(connection,
                 new PersonDAOImpl(connection), new ApartmentDAOImpl(connection, new AddressDAOImpl(connection), new PersonDAOImpl(connection)));
 //        test.findAll();
-        test.findAllBelow(1600);
+//        test.findAllBelow(1600);
 //        test.findAllNumberOfRoom(3);
 //        System.out.println("\n");
 //        test.findById(2);
+
+//        test.findAllAvailable();
 
     }
 
