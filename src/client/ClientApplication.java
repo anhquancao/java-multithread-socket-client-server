@@ -26,7 +26,12 @@ public class ClientApplication {
     }
 
     public void requestAllBelow(int amount) {
-        RequestRentalAction requestRentalAction = new RequestRentalAction(RequestRentalAction.RENT);
+        RequestRentalAction requestRentalAction = new RequestRentalAction(RequestRentalAction.RENT, amount);
+        client.doAction(requestRentalAction);
+    }
+
+    public void requestAllNumRoom(int num_rooms){
+        RequestRentalAction requestRentalAction = new RequestRentalAction(RequestRentalAction.ROOM, num_rooms);
         client.doAction(requestRentalAction);
     }
 
@@ -70,9 +75,9 @@ public class ClientApplication {
     public static void main(String[] args) {
         ClientApplication clientApplication = new ClientApplication();
 //        clientApplication.run();
-        clientApplication.requestAllAvailableRentals();
+//        clientApplication.requestAllAvailableRentals();
 //        clientApplication.requestAllRentals();
-        clientApplication.requestAllBelow(1500);
-
+//        clientApplication.requestAllBelow(1600);
+            clientApplication.requestAllNumRoom(2);
     }
 }

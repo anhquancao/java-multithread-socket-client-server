@@ -45,8 +45,8 @@ public class SlaveQueryRentals extends SlaveQuery {
                 }
                 break;
             case RequestRentalAction.RENT:
-                String results = this.rentalController.requestRentalBelowRent(this.param2);
                 try {
+                    String results = this.rentalController.requestRentalBelowRent(this.param2);
                     writer.write(results);
                     writer.newLine();
                     writer.flush();
@@ -55,6 +55,15 @@ public class SlaveQueryRentals extends SlaveQuery {
                 }
                 break;
             case RequestRentalAction.ROOM:
+                try {
+                    String results = this.rentalController.requestRenterByNumberOfRooms(this.param2);
+                    writer.write(results);
+                    writer.newLine();
+                    writer.flush();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
                 break;
         }
     }

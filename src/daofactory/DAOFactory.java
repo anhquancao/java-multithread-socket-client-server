@@ -9,11 +9,11 @@ import daos.RentalDAO;
  * Created by caoquan on 4/8/17.
  */
 public interface DAOFactory {
-    public AddressDAO getAddressDAO();
+    AddressDAO getAddressDAO();
 
-    public RentalDAO getRentalDAO();
+    RentalDAO getRentalDAO();
 
-    public ApartmentDAO getApartmentDAO();
+    ApartmentDAO getApartmentDAO();
 
-    public PersonDAO getPersonDAO();
+    PersonDAO getPersonDAO();
 }
