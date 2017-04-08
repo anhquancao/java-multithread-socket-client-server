@@ -19,7 +19,7 @@ public class ClientApplication {
         userInterface = new UserInterface();
     }
 
-    public void requestAllRentals() {
+    public void requestAllAvailableRentals() {
         RequestRentalAction requestRentalAction = new RequestRentalAction(RequestRentalAction.ALL);
         client.doAction(requestRentalAction);
     }
@@ -63,8 +63,8 @@ public class ClientApplication {
 
     public static void main(String[] args) {
         ClientApplication clientApplication = new ClientApplication();
-        clientApplication.run();
-//        clientApplication.requestAllRentals();
+//        clientApplication.run();
+        clientApplication.requestAllAvailableRentals();
 //        clientApplication.requestAllRentals();
 
     }

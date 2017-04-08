@@ -1,6 +1,7 @@
 package server;
 
 import actions.RequestRentalAction;
+import controllers.RentalController;
 import utils.Constant;
 
 import java.io.*;
@@ -12,12 +13,13 @@ public class SlaveQueryRentals extends SlaveQuery {
     private String criteria;
     private int value;
     private BufferedWriter writer;
-
+    private RentalController rentalController;
 
     public SlaveQueryRentals(OutputStream outputStream, String criteria, int value) {
         super(outputStream);
         this.criteria = criteria;
         this.value = value;
+        this.rentalController = new RentalController();
         try {
             this.writer = new BufferedWriter(new OutputStreamWriter(outputStream, Constant.CHARSET));
         } catch (UnsupportedEncodingException e) {
@@ -36,9 +38,8 @@ public class SlaveQueryRentals extends SlaveQuery {
             case RequestRentalAction.ALL:
                 System.out.println("all");
                 try {
-                    writer.write("Answer from server");
-                    writer.newLine();
-                    writer.write("All");
+                    String results = this.rentalController.requestAllAvailableRentals();
+                    writer.write(results);
                     writer.newLine();
                     writer.flush();
 

@@ -36,8 +36,12 @@ public class MasterOrdinary extends Thread {
                 Socket socket = serverSocket.accept();
                 System.out.println("Accept");
                 BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), Constant.CHARSET));
+                // Read command
                 String input = reader.readLine();
+
+                // parse command
                 String[] splittedStr = input.split(" ");
+
                 String command = splittedStr[0];
                 switch (command) {
                     case ActionTypes.REQUEST_RENTAL:
