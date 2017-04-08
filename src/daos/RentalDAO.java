@@ -10,6 +10,8 @@ import java.util.List;
 public interface RentalDAO {
     List<Rental> findAll();
 
+    List<Rental> findAllAvailable();
+
     List<Rental> findAllBelow(int amount);
 
     List<Rental> findAllNumberOfRoom(int amount);
