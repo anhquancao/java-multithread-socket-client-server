@@ -1,7 +1,5 @@
 package controllers;
 
-import daofactory.DAOFactory;
-import daofactory.DefaultDAOFactory;
 import daos.RentalDAO;
 import models.Rental;
 
@@ -10,7 +8,7 @@ import java.util.List;
 /**
  * Created by caoquan on 4/7/17.
  */
-public class RentalController extends Controllers {
+public class RentalController extends Controller {
     RentalDAO rentalDAO;
 
     public RentalController() {

@@ -12,6 +12,8 @@ public interface ApartmentDAO {
     List<Apartment> findAll();
 
     List<Apartment> findById(int id);
+    
+    List<Apartment> findByRenterId(int id);
 
     boolean insertApartment(Apartment apartment);
 

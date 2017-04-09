@@ -8,10 +8,10 @@ import java.util.List;
 /**
  * Created by dosontung on 4/8/17.
  */
-public abstract class Controllers {
+public abstract class Controller {
     protected DAOFactory daoFactory;
 
-    public Controllers() {
+    public Controller() {
         this.daoFactory = DefaultDAOFactory.getInstance();
     }
 

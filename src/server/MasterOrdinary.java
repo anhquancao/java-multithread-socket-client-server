@@ -45,10 +45,13 @@ public class MasterOrdinary extends Thread {
                 String command = splittedStr[0];
                 switch (command) {
                     case ActionTypes.REQUEST_RENTAL:
-                        SlaveQueryRentals slaveQueryAppartments =
+                        SlaveQueryRentals slaveQueryRentals =
                                 new SlaveQueryRentals(socket.getOutputStream(), splittedStr[1]);
-                        service.submit(slaveQueryAppartments);
+                        service.submit(slaveQueryRentals);
                         break;
+                    case ActionTypes.REQUEST_APARTMENT:
+                        SlaveQueryApartments slaveQueryApartments = new SlaveQueryApartments(socket.getOutputStream(), splittedStr[1]);
+                        service.submit(slaveQueryApartments);
                 }
 
             } catch (IOException e) {

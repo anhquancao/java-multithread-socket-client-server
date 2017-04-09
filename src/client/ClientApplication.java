@@ -1,5 +1,6 @@
 package client;
 
+import actions.RequestApartmentAction;
 import actions.RequestRentalAction;
 import jdk.nashorn.internal.ir.RuntimeNode;
 
@@ -33,6 +34,11 @@ public class ClientApplication {
     public void requestAllNumRoom(int num_rooms){
         RequestRentalAction requestRentalAction = new RequestRentalAction(RequestRentalAction.ROOM, num_rooms);
         client.doAction(requestRentalAction);
+    }
+
+    public void requestApartmentOfRenter(int renterId){
+        RequestApartmentAction requestApartmentAction = new RequestApartmentAction(RequestApartmentAction.RENTER, renterId);
+        client.doAction(requestApartmentAction);
     }
 
     public int getInputChoice() {
@@ -78,6 +84,7 @@ public class ClientApplication {
 //        clientApplication.requestAllAvailableRentals();
 //        clientApplication.requestAllRentals();
 //        clientApplication.requestAllBelow(1600);
-            clientApplication.requestAllNumRoom(2);
+//            clientApplication.requestAllNumRoom(2);
+            clientApplication.requestApartmentOfRenter(2);
     }
 }
