@@ -14,7 +14,6 @@ public class ApartmentController extends Controller {
     public ApartmentController() {
         super();
         this.apartmentDAO = this.daoFactory.getApartmentDAO();
-
     }
 
     public String requestAllApartmentOfRenter(int renterId) {

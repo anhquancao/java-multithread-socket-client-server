@@ -35,7 +35,7 @@ public class ClientApplication {
         client.doAction(requestRentalAction);
     }
 
-    public void requestApartmentOfRenter(int renterId){
+    public void requestApartmentOfRenter(int renterId) {
         RequestApartmentAction requestApartmentAction = new RequestApartmentAction(RequestApartmentAction.RENTER, renterId);
         client.doAction(requestApartmentAction);
     }
@@ -124,12 +124,12 @@ public class ClientApplication {
     public static void main(String[] args) {
         ClientApplication clientApplication = new ClientApplication();
 
-        clientApplication.run();
+//        clientApplication.run();
 
 //        clientApplication.requestAllAvailableRentals();
 //        clientApplication.requestAllRentals();
 //        clientApplication.requestAllBelow(1600);
 //            clientApplication.requestAllNumRoom(2);
-            clientApplication.requestApartmentOfRenter(2);
-
+        clientApplication.requestApartmentOfRenter(2);
+    }
 }
