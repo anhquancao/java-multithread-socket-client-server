@@ -1,6 +1,7 @@
 package controllers;
 
 import daos.RentalDAO;
+import models.Person;
 import models.Rental;
 
 import java.util.List;
@@ -30,4 +31,10 @@ public class RentalController extends Controller {
         List<Rental> rentals = this.rentalDAO.findAllNumberOfRoom(numberOfRooms);
         return renderResult(rentals);
     }
+
+    public String requestTenantOfRental(int id) {
+        List<Person> tenants = this.rentalDAO.findTenantOfRental(id);
+        return renderResult(tenants);
+    }
+
 }

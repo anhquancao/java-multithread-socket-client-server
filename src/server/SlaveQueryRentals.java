@@ -65,6 +65,16 @@ public class SlaveQueryRentals extends SlaveQuery {
                 }
 
                 break;
+            case RequestRentalAction.TENANT:
+                try {
+                    String results = this.rentalController.requestTenantOfRental(this.param2);
+                    writer.write(results);
+                    writer.newLine();
+                    writer.flush();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
         }
     }
 }

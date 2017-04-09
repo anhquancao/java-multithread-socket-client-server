@@ -52,6 +52,28 @@ public class PersonDAOImpl implements PersonDAO {
     }
 
     @Override
+    public List<Person> findAllTenant() {
+        List<Person> persons = new ArrayList<>();
+        String sql = "SELECT * FROM person WHERE type = ?";
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setString(1, PersonType.TENANT.toString());
+
+            ResultSet result = statement.executeQuery();
+            while (result.next()) {
+                Person newPerson = new Tenant(result.getInt("id"), result.getString("email"));
+                persons.add(newPerson);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return persons;
+    }
+
+    @Override
     public List<Person> findById(int personId) {
         List<Person> persons = new ArrayList<>();
         String sql = "SELECT * FROM person WHERE id = ?";

@@ -11,6 +11,7 @@ public class RequestRentalAction extends Action {
     public static final String ALL = "ALL";
     public static final String RENT = "RENT";
     public static final String ROOM = "ROOM";
+    public static final String TENANT = "TENANT";
 
     public RequestRentalAction(String param1, int param2) {
         super(ActionTypes.REQUEST_RENTAL);

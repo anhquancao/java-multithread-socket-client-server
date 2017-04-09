@@ -10,6 +10,8 @@ import java.util.List;
 public interface PersonDAO {
     List<Person> findAll();
 
+    List<Person> findAllTenant();
+
     List<Person> findById(int personId);
 
 

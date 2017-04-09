@@ -1,6 +1,7 @@
 package client;
 
 import actions.RequestApartmentAction;
+import actions.RequestPersonAction;
 import actions.RequestRentalAction;
 
 import java.util.InputMismatchException;
@@ -38,6 +39,16 @@ public class ClientApplication {
     public void requestApartmentOfRenter(int renterId) {
         RequestApartmentAction requestApartmentAction = new RequestApartmentAction(RequestApartmentAction.RENTER, renterId);
         client.doAction(requestApartmentAction);
+    }
+
+    public void requestListAllTenant() {
+        RequestPersonAction requestPersonAction = new RequestPersonAction(RequestPersonAction.ALLTENANT);
+        client.doAction(requestPersonAction);
+    }
+
+    public void requestTenantOfRental(int rentalId) {
+        RequestRentalAction requestRentalAction = new RequestRentalAction(RequestRentalAction.TENANT, rentalId);
+        client.doAction(requestRentalAction);
     }
 
     public int getInputChoice() {
@@ -130,6 +141,10 @@ public class ClientApplication {
 //        clientApplication.requestAllRentals();
 //        clientApplication.requestAllBelow(1600);
 //            clientApplication.requestAllNumRoom(2);
-        clientApplication.requestApartmentOfRenter(2);
+//        clientApplication.requestApartmentOfRenter(2);
+//        clientApplication.requestListAllTenant();
+
+        clientApplication.requestTenantOfRental(1);
+
     }
 }

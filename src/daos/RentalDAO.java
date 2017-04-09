@@ -1,5 +1,6 @@
 package daos;
 
+import models.Person;
 import models.Rental;
 
 import java.util.List;
@@ -17,6 +18,8 @@ public interface RentalDAO {
     List<Rental> findAllNumberOfRoom(int amount);
 
     List<Rental> findById(int id);
+
+    List<Person> findTenantOfRental(int id);
 
     boolean insertRental(Rental rental);
 

@@ -6,6 +6,7 @@ import models.Apartment;
 import models.Person;
 import models.Rental;
 import utils.ApartmentType;
+import utils.PersonType;
 import utils.RentalStatus;
 
 import java.sql.Connection;
@@ -167,12 +168,12 @@ public class RentalDAOImpl implements RentalDAO {
                 Rental newRental = null;
                 Apartment newApartment = apartmentDAO.findById(result.getInt("apartment_id")).get(0);
                 if (result.getInt("tenant_id") == 0) {
-                    newRental = new Rental(RentalStatus.valueOf(result.getString("status")), newApartment);
+                    newRental = new Rental(result.getInt("id"), RentalStatus.valueOf(result.getString("status")), newApartment);
                 } else {
                     Person newPerson = personDAO.findById(result.getInt("tenant_id")).get(0);
-                    newRental = new Rental(RentalStatus.valueOf(result.getString("status")), newApartment, newPerson);
+                    newRental = new Rental(result.getInt("id"), RentalStatus.valueOf(result.getString("status")), newApartment, newPerson);
                 }
-                System.out.println(newRental);
+//                System.out.println(newRental);
                 rentals.add(newRental);
             }
 
@@ -181,6 +182,40 @@ public class RentalDAOImpl implements RentalDAO {
         }
 
         return rentals;
+    }
+
+    @Override
+    public List<Person> findTenantOfRental(int rentalId) {
+        String sql = "SELECT * FROM rental WHERE  id = ?";
+        String sql2 = "SELECT * FROM person WHERE id = ?";
+        List<Person> persons = new ArrayList<>();
+        int tenantId = 0;
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setInt(1, rentalId);
+
+            ResultSet result = statement.executeQuery();
+
+            while (result.next()) {
+                tenantId = result.getInt("tenant_id");
+            }
+            PreparedStatement statement2 = connection.prepareStatement(sql2);
+            statement2.setInt(1, tenantId);
+
+            ResultSet result2 = statement2.executeQuery();
+
+            while (result2.next()) {
+                Person newPerson = new Person(result2.getInt("id"), result2.getString("email"), PersonType.valueOf(result2.getString("type")));
+                persons.add(newPerson);
+                System.out.println(newPerson);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return persons;
     }
 
     @Override
@@ -241,8 +276,8 @@ public class RentalDAOImpl implements RentalDAO {
 //        test.findAllBelow(1600);
 //        test.findAllNumberOfRoom(3);
 //        System.out.println("\n");
-//        test.findById(2);
-
+        Rental rental = test.findById(3).get(0);
+        test.findTenantOfRental(rental.getId());
 //        test.findAllAvailable();
 
     }
