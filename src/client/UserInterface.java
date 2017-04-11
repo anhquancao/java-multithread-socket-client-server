@@ -18,7 +18,7 @@ public class UserInterface {
             }
 
         }
-        System.out.println(stringBuilder.append(": "));
+        System.out.print(stringBuilder.append(": "));
     }
 
     public void showMainMenu() {

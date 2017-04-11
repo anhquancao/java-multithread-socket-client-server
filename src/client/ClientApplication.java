@@ -60,19 +60,22 @@ public class ClientApplication {
                                     int criteriaChoice = getInputChoice();
                                     switch (criteriaChoice) {
                                         case 1:
-                                            // 1.Request all available rental
+                                            // 1. Request all available rental
                                             client.requestAllAvailableRentals();
                                             break;
                                         case 2:
+                                            // 2. Request all available rental monthly below
+                                            client.requestAllMonthlyRentBelow();
                                             break;
                                         case 3:
+                                            // 3. All available rental monthly with number of rooms.
+                                            client.requestAllAvailableByNumRoom();
                                             break;
                                         case 4:
                                             criteriaCheck = 0;
                                             break;
                                     }
                                 }
-
 
                                 break;
                             case 2:
@@ -100,7 +103,9 @@ public class ClientApplication {
 
 
     public static void main(String[] args) {
-        TenantClient client = new TenantClient();
+//        TenantClient client = new TenantClient();
+        ClientApplication application = new ClientApplication();
+        application.run();
 
 //        clientApplication.run();
 
@@ -111,7 +116,7 @@ public class ClientApplication {
 //        clientApplication.requestApartmentOfRenter(2);
 //        clientApplication.requestListAllTenant();
 
-        client.requestTenantOfRental(1);
+//        client.requestTenantOfRental(1);
 
     }
 }
