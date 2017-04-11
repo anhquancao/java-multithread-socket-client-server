@@ -132,7 +132,6 @@ public class PersonDAOImpl implements PersonDAO {
 
     public static void main(String args[]) {
         PersonDAOImpl test = new PersonDAOImpl(SQLiteJDBCDriverConnection.getInstance().getConnection());
-
         test.findById(1);
         test.findAll();
     }
