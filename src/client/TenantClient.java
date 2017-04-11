@@ -1,58 +1,41 @@
 package client;
 
-import actions.Action;
-import utils.Constant;
-
-import java.io.*;
-import java.net.Socket;
+import actions.RequestApartmentAction;
+import actions.RequestPersonAction;
+import actions.RequestRentalAction;
 
 /**
  * Created by caoquan on 4/5/17.
  */
-public class TenantClient {
+public class TenantClient extends Client {
 
-    private Socket socket;
-
-    private BufferedWriter writer;
-    private BufferedReader reader;
-
-    public TenantClient() {
+    public void requestAllAvailableRentals() {
+        RequestRentalAction requestRentalAction = new RequestRentalAction(RequestRentalAction.ALL);
+        doAction(requestRentalAction);
     }
 
-    public void doAction(Action action) {
-        try {
-            System.out.println("Send request: " + action.command());
+    public void requestAllBelow(int amount) {
+        RequestRentalAction requestRentalAction = new RequestRentalAction(RequestRentalAction.RENT, amount);
+        doAction(requestRentalAction);
+    }
 
-            this.socket = new Socket("localhost", Constant.PORT);
-            this.writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), Constant.CHARSET));
-            this.reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), Constant.CHARSET));
+    public void requestAllNumRoom(int num_rooms) {
+        RequestRentalAction requestRentalAction = new RequestRentalAction(RequestRentalAction.ROOM, num_rooms);
+        doAction(requestRentalAction);
+    }
 
-            this.writer.write(action.command());
-            this.writer.newLine();
-            this.writer.flush();
+    public void requestApartmentOfRenter(int renterId) {
+        RequestApartmentAction requestApartmentAction = new RequestApartmentAction(RequestApartmentAction.RENTER, renterId);
+        doAction(requestApartmentAction);
+    }
 
-            InputStream inputStream = socket.getInputStream();
+    public void requestListAllTenant() {
+        RequestPersonAction requestPersonAction = new RequestPersonAction(RequestPersonAction.ALLTENANT);
+        doAction(requestPersonAction);
+    }
 
-            int attempts = 0;
-            while (inputStream.available() == 0 && attempts < 1000) {
-                attempts++;
-                Thread.sleep(10);
-            }
-            if (attempts == 1000) {
-                System.out.println("Request Timeout");
-            }
-
-//            String line = reader.readLine();
-            while (reader.ready()) {
-                String line = reader.readLine();
-                System.out.println(line);
-//                line = reader.readLine();
-            }
-
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    public void requestTenantOfRental(int rentalId) {
+        RequestRentalAction requestRentalAction = new RequestRentalAction(RequestRentalAction.TENANT, rentalId);
+        doAction(requestRentalAction);
     }
 }

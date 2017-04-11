@@ -21,35 +21,6 @@ public class ClientApplication {
         userInterface = new UserInterface();
     }
 
-    public void requestAllAvailableRentals() {
-        RequestRentalAction requestRentalAction = new RequestRentalAction(RequestRentalAction.ALL);
-        client.doAction(requestRentalAction);
-    }
-
-    public void requestAllBelow(int amount) {
-        RequestRentalAction requestRentalAction = new RequestRentalAction(RequestRentalAction.RENT, amount);
-        client.doAction(requestRentalAction);
-    }
-
-    public void requestAllNumRoom(int num_rooms) {
-        RequestRentalAction requestRentalAction = new RequestRentalAction(RequestRentalAction.ROOM, num_rooms);
-        client.doAction(requestRentalAction);
-    }
-
-    public void requestApartmentOfRenter(int renterId) {
-        RequestApartmentAction requestApartmentAction = new RequestApartmentAction(RequestApartmentAction.RENTER, renterId);
-        client.doAction(requestApartmentAction);
-    }
-
-    public void requestListAllTenant() {
-        RequestPersonAction requestPersonAction = new RequestPersonAction(RequestPersonAction.ALLTENANT);
-        client.doAction(requestPersonAction);
-    }
-
-    public void requestTenantOfRental(int rentalId) {
-        RequestRentalAction requestRentalAction = new RequestRentalAction(RequestRentalAction.TENANT, rentalId);
-        client.doAction(requestRentalAction);
-    }
 
     public int getInputChoice() {
         int choice = 0;
@@ -94,7 +65,7 @@ public class ClientApplication {
                                     switch (criteriaChoice) {
                                         case 1:
                                             // 1.Request all available rental
-                                            this.requestAllAvailableRentals();
+                                            client.requestAllAvailableRentals();
                                             break;
                                         case 2:
                                             break;
