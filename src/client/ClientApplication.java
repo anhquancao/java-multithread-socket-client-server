@@ -1,9 +1,5 @@
 package client;
 
-import actions.RequestApartmentAction;
-import actions.RequestPersonAction;
-import actions.RequestRentalAction;
-
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -104,7 +100,7 @@ public class ClientApplication {
 
 
     public static void main(String[] args) {
-        ClientApplication clientApplication = new ClientApplication();
+        TenantClient client = new TenantClient();
 
 //        clientApplication.run();
 
@@ -115,7 +111,7 @@ public class ClientApplication {
 //        clientApplication.requestApartmentOfRenter(2);
 //        clientApplication.requestListAllTenant();
 
-        clientApplication.requestTenantOfRental(1);
+        client.requestTenantOfRental(1);
 
     }
 }
