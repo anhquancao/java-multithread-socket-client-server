@@ -16,8 +16,8 @@ public class ApartmentController extends Controller {
         this.apartmentDAO = this.daoFactory.getApartmentDAO();
     }
 
-    public String requestAllApartmentOfRenter(int renterId) {
-        List<Apartment> apartments = this.apartmentDAO.findByRenterId(renterId);
+    public String requestAllApartmentOfRenter(String email) {
+        List<Apartment> apartments = this.apartmentDAO.findByRenterEmail(email);
         return renderResult(apartments);
     }
 }

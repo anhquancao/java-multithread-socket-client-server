@@ -22,4 +22,9 @@ public class PersonController extends Controller {
         List<Person> tenants = this.personDAO.findAllTenant();
         return renderResult(tenants);
     }
+
+    public String requestListAllTenantByRenter(String email) {
+        List<Person> tenants = this.personDAO.findAllTenantByRenter(email);
+        return renderResult(tenants);
+    }
 }

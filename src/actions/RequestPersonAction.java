@@ -5,12 +5,12 @@ package actions;
  */
 public class RequestPersonAction extends Action {
     private String param1;
-    private int param2;
+    private String param2;
 
     //List of Action for Person Schema
     public static final String ALLTENANT = "ALLTENANT";
 
-    public RequestPersonAction(String param1, int param2) {
+    public RequestPersonAction(String param1, String param2) {
         super(ActionTypes.REQUEST_PERSON);
         this.param1 = param1;
         this.param2 = param2;

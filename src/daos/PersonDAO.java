@@ -12,7 +12,10 @@ public interface PersonDAO {
 
     List<Person> findAllTenant();
 
+    List<Person> findAllTenantByRenter(String email);
+
     List<Person> findById(int personId);
 
+    boolean insertPerson(Person person);
 
 }

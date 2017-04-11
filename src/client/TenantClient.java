@@ -1,6 +1,5 @@
 package client;
 
-import actions.RequestApartmentAction;
 import actions.RequestPersonAction;
 import actions.RequestRentalAction;
 
@@ -46,10 +45,6 @@ public class TenantClient extends Client {
         }
     }
 
-    public void requestApartmentOfRenter(int renterId) {
-        RequestApartmentAction requestApartmentAction = new RequestApartmentAction(RequestApartmentAction.RENTER, renterId);
-        doAction(requestApartmentAction);
-    }
 
     public void requestListAllTenant() {
         RequestPersonAction requestPersonAction = new RequestPersonAction(RequestPersonAction.ALLTENANT);
@@ -60,4 +55,6 @@ public class TenantClient extends Client {
         RequestRentalAction requestRentalAction = new RequestRentalAction(RequestRentalAction.TENANT, rentalId);
         doAction(requestRentalAction);
     }
+
+
 }

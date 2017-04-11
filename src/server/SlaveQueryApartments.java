@@ -2,7 +2,6 @@ package server;
 
 import actions.RequestApartmentAction;
 import controllers.ApartmentController;
-import models.Apartment;
 import utils.Constant;
 
 import java.io.*;
@@ -12,7 +11,7 @@ import java.io.*;
  */
 public class SlaveQueryApartments extends SlaveQuery {
     private String param1;
-    private int param2;
+    private String param2;
     private BufferedWriter writer;
     private ApartmentController apartmentController;
 
@@ -21,7 +20,7 @@ public class SlaveQueryApartments extends SlaveQuery {
         super(outputStream);
         String[] splittedParams = params.split(" ");
         this.param1 = splittedParams[0];
-        this.param2 = Integer.parseInt(splittedParams[1]);
+        this.param2 = splittedParams[1];
 
         this.apartmentController = new ApartmentController();
         try {

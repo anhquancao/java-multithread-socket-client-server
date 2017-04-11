@@ -10,15 +10,16 @@ import java.io.*;
  */
 public class SlaveQueryPersons extends SlaveQuery {
     private String param1;
-    private int param2;
+    private String param2;
     private PersonController personController;
     private BufferedWriter writer;
 
     public SlaveQueryPersons(OutputStream outputStream, String params) {
         super(outputStream);
+        
         String[] splittedParams = params.split(" ");
         this.param1 = splittedParams[0];
-        this.param2 = Integer.parseInt(splittedParams[1]);
+        this.param2 = splittedParams[1];
 
         this.personController = new PersonController();
         try {
@@ -33,7 +34,7 @@ public class SlaveQueryPersons extends SlaveQuery {
         switch (this.param1) {
             case PersonController.ALLTENANT:
                 try {
-                    String results = this.personController.requestListAllTenant();
+                    String results = this.personController.requestListAllTenantByRenter(this.param2);
                     writer.write(results);
                     writer.newLine();
                     writer.flush();
