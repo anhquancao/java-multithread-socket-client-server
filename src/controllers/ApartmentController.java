@@ -20,4 +20,9 @@ public class ApartmentController extends Controller {
         List<Apartment> apartments = this.apartmentDAO.findByRenterId(renterId);
         return renderResult(apartments);
     }
+
+    public String requestAllAvailableApartmentOfRenter(int renterId){
+        List<Apartment> apartments = this.apartmentDAO.findAvailableByRenterId(renterId);
+        return renderResult(apartments);
+    }
 }

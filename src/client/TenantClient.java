@@ -38,4 +38,9 @@ public class TenantClient extends Client {
         RequestRentalAction requestRentalAction = new RequestRentalAction(RequestRentalAction.TENANT, rentalId);
         doAction(requestRentalAction);
     }
+
+    public void requestNewRental(int apartmentId) {
+        RequestRentalAction requestRentalAction = new RequestRentalAction(RequestRentalAction.NEWRENTAL, apartmentId);
+        doAction(requestRentalAction);
+    }
 }

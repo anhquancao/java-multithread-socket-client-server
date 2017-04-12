@@ -111,7 +111,8 @@ public class ClientApplication {
 //        clientApplication.requestApartmentOfRenter(2);
 //        clientApplication.requestListAllTenant();
 
-        client.requestTenantOfRental(1);
+//        client.requestTenantOfRental(1);
+        client.requestNewRental(1);
 
     }
 }
