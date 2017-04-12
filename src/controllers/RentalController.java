@@ -49,4 +49,10 @@ public class RentalController extends Controller {
         return "Created new rental";
     }
 
+    public String requestDeleteRental(int rentalId) {
+        Rental rental = this.rentalDAO.findById(rentalId).get(0);
+        this.rentalDAO.deleteRental(rental);
+        return "Rental Deleted";
+    }
+
 }

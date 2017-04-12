@@ -46,5 +46,9 @@ public class RentalClient extends Client {
         doAction(requestPersonAction);
     }
 
+    public void requestDeleteTenant(int tenantId) {
+        RequestRentalAction requestRentalAction = new RequestRentalAction(RequestRentalAction.DELETERENTAL, tenantId);
+        doAction(requestRentalAction);
+    }
 
 }
