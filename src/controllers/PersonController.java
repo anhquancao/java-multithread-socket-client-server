@@ -22,4 +22,17 @@ public class PersonController extends Controller {
         List<Person> tenants = this.personDAO.findAllTenant();
         return renderResult(tenants);
     }
+
+    public String requestListAllTenantByRenter(String email) {
+        List<Person> tenants = this.personDAO.findAllTenantByRenter(email);
+        return renderResult(tenants);
+    }
+
+    public String createPerson(Person person) {
+        if (this.personDAO.insertPerson(person)) {
+            return "Person created";
+        } else {
+            return "Failed to create person";
+        }
+    }
 }

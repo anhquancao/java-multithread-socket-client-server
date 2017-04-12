@@ -1,6 +1,5 @@
 package daos;
 
-import models.Address;
 import models.Apartment;
 
 import java.util.List;
@@ -12,6 +11,8 @@ public interface ApartmentDAO {
     List<Apartment> findAll();
 
     List<Apartment> findById(int id);
+
+    List<Apartment> findByRenterEmail(String email);
 
     List<Apartment> findByRenterId(int id);
 

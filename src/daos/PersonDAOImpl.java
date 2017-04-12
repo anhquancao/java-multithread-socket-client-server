@@ -24,14 +24,9 @@ public class PersonDAOImpl implements PersonDAO {
     }
 
 
-    @Override
-    public List<Person> findAll() {
+    private List<Person> getPersonsFromStatement(PreparedStatement statement) {
         List<Person> persons = new ArrayList<>();
-        String sql = "SELECT * FROM person";
-
         try {
-            PreparedStatement statement = connection.prepareStatement(sql);
-
             ResultSet result = statement.executeQuery();
             while (result.next()) {
                 Person newPerson = null;
@@ -42,8 +37,22 @@ public class PersonDAOImpl implements PersonDAO {
                     newPerson = new Tenant(result.getInt("id"), result.getString("email"));
                 }
                 persons.add(newPerson);
-//                System.out.println(newPerson);
+                //                System.out.println(newPerson);
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return persons;
+    }
+
+    @Override
+    public List<Person> findAll() {
+        List<Person> persons = null;
+        String sql = "SELECT * FROM person";
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            persons = getPersonsFromStatement(statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -53,7 +62,7 @@ public class PersonDAOImpl implements PersonDAO {
 
     @Override
     public List<Person> findAllTenant() {
-        List<Person> persons = new ArrayList<>();
+        List<Person> persons = null;
         String sql = "SELECT * FROM person WHERE type = ?";
 
         try {
@@ -61,11 +70,26 @@ public class PersonDAOImpl implements PersonDAO {
 
             statement.setString(1, PersonType.TENANT.toString());
 
-            ResultSet result = statement.executeQuery();
-            while (result.next()) {
-                Person newPerson = new Tenant(result.getInt("id"), result.getString("email"));
-                persons.add(newPerson);
-            }
+            persons = getPersonsFromStatement(statement);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return persons;
+    }
+
+    @Override
+    public List<Person> findAllTenantByRenter(String email) {
+        List<Person> persons = null;
+        String sql = "SELECT * FROM person where id in " +
+                "(select tenant_id from rental where apartment_id in " +
+                "(select id from apartment where renter_id in " +
+                "(select id from person where email = ?)))";
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, email);
+            persons = getPersonsFromStatement(statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -81,19 +105,6 @@ public class PersonDAOImpl implements PersonDAO {
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, personId);
-
-            ResultSet result = statement.executeQuery();
-            while (result.next()) {
-                Person newPerson = null;
-                if (result.getString("type").equalsIgnoreCase(PersonType.RENTER.toString())) {
-                    newPerson = new Renter(result.getInt("id"), result.getString("email"));
-                }
-                if (result.getString("type").equalsIgnoreCase(PersonType.TENANT.toString())) {
-                    newPerson = new Tenant(result.getInt("id"), result.getString("email"));
-                }
-                persons.add(newPerson);
-//                System.out.println(newPerson);
-            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -101,9 +112,26 @@ public class PersonDAOImpl implements PersonDAO {
         return persons;
     }
 
+    @Override
+    public boolean insertPerson(Person person) {
+        String sql = "INSERT INTO person (email, type, password) VALUES (?,?,?)";
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setString(1, person.getEmail());
+            statement.setString(2, person.getPersonType().toString());
+            statement.setString(3, person.getPasswordHash());
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
+
     public static void main(String args[]) {
         PersonDAOImpl test = new PersonDAOImpl(SQLiteJDBCDriverConnection.getInstance().getConnection());
-
         test.findById(1);
         test.findAll();
     }

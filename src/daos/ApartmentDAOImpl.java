@@ -62,16 +62,27 @@ public class ApartmentDAOImpl implements ApartmentDAO {
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, apartmentId);
+            apartments = getApartmentsFromStatement(statement);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-            ResultSet result = statement.executeQuery();
-            while (result.next()) {
-                Address newAddress = addressDAO.findById(result.getInt("address_id")).get(0);
-                Person newPerson = personDAO.findById(result.getInt("renter_id")).get(0);
-                Apartment newApartment = new Apartment(result.getInt("id"), newAddress, result.getInt("num_rooms"), result.getInt("monthly_rent"), newPerson, ApartmentType.valueOf(result.getString("type")));
+        return apartments;
+    }
 
-                apartments.add(newApartment);
-//                System.out.println(newApartment);
-            }
+    @Override
+    public List<Apartment> findByRenterEmail(String email) {
+        List<Apartment> apartments = new ArrayList<>();
+        String sql = "SELECT * FROM apartment WHERE apartment.renter_id " +
+                "in  (SELECT id FROM person WHERE email = ?) " +
+                "and id in (select apartment_id from rental where status = ?)";
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, email);
+            statement.setString(2, RentalStatus.AVAILABLE.toString());
+
+            apartments = getApartmentsFromStatement(statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -87,7 +98,17 @@ public class ApartmentDAOImpl implements ApartmentDAO {
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, renterId);
+            apartments = getApartmentsFromStatement(statement);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
+        return apartments;
+    }
+
+    private List<Apartment> getApartmentsFromStatement(PreparedStatement statement) {
+        List<Apartment> apartments = new ArrayList<>();
+        try {
             ResultSet result = statement.executeQuery();
             while (result.next()) {
                 Address newAddress = addressDAO.findById(result.getInt("address_id")).get(0);
@@ -99,7 +120,6 @@ public class ApartmentDAOImpl implements ApartmentDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return apartments;
     }
 
@@ -175,7 +195,6 @@ public class ApartmentDAOImpl implements ApartmentDAO {
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, apartment.getId());
-
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
