@@ -167,8 +167,8 @@ public class ClientApplication {
 
     public static void main(String[] args) {
 //        TenantClient tenantClient = new TenantClient();
-        ClientApplication application = new ClientApplication();
-        application.run();
+//        ClientApplication application = new ClientApplication();
+//        application.run();
 
 //        clientApplication.run();
 
@@ -178,8 +178,11 @@ public class ClientApplication {
 //            clientApplication.requestAllNumRoom(2);
 //        clientApplication.requestApartmentOfRenter(2);
 //        clientApplication.requestListAllTenant();
+//        client.requestTenantOfRental(1);
+//        client.requestNewRental(1);
 
-//        tenantClient.requestTenantOfRental(1);
+        RentalClient client = new RentalClient();
+        client.requestDeleteTenant(5);
 
     }
 }

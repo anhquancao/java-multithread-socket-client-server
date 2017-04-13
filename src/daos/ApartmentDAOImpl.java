@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -44,7 +45,7 @@ public class ApartmentDAOImpl implements ApartmentDAO {
                 Apartment newApartment = new Apartment(result.getInt("id"), newAddress, result.getInt("num_rooms"), result.getInt("monthly_rent"), newPerson, ApartmentType.valueOf(result.getString("type")));
 
                 apartments.add(newApartment);
-                System.out.println(newApartment);
+//                System.out.println(newApartment);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -123,6 +124,31 @@ public class ApartmentDAOImpl implements ApartmentDAO {
     }
 
     @Override
+    public List<Apartment> findAvailableByRenterId(int renterId) {
+        List<Apartment> apartments = new ArrayList<>();
+        String sql = "SELECT apartment.id AS id, address_id, renter_id, num_rooms, monthly_rent, type FROM apartment JOIN rental ON apartment.id = rental.apartment_id WHERE renter_id = ? AND status = ?";
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, renterId);
+            statement.setString(2, RentalStatus.AVAILABLE.toString());
+
+            ResultSet result = statement.executeQuery();
+            while (result.next()) {
+                Address newAddress = addressDAO.findById(result.getInt("address_id")).get(0);
+                Person newPerson = personDAO.findById(result.getInt("renter_id")).get(0);
+                Apartment newApartment = new Apartment(result.getInt("id"), newAddress, result.getInt("num_rooms"), result.getInt("monthly_rent"), newPerson, ApartmentType.valueOf(result.getString("type")));
+
+                apartments.add(newApartment);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return apartments;
+    }
+
+    @Override
     public boolean insertApartment(Apartment apartment) {
         String sql = "INSERT INTO apartment (address_id, num_rooms, monthly_rent, renter_id, type) VALUES (?,?,?,?,?)";
 
@@ -179,7 +205,13 @@ public class ApartmentDAOImpl implements ApartmentDAO {
     public static void main(String agrs[]) {
         Connection connection = SQLiteJDBCDriverConnection.getInstance().getConnection();
         ApartmentDAOImpl test = new ApartmentDAOImpl(connection, new AddressDAOImpl(connection), new PersonDAOImpl(connection));
-        test.findById(2);
-        test.findAll();
+        List<Apartment> apartments = test.findById(2);
+//        test.findAll();
+
+        List<Apartment> apartments2 = test.findAvailableByRenterId(4);
+        for(Iterator<Apartment> i = apartments2.iterator(); i.hasNext(); ) {
+            Apartment item = i.next();
+            System.out.println(item);
+        }
     }
 }
