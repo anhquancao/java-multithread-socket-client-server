@@ -16,6 +16,8 @@ public interface PersonDAO {
 
     List<Person> findById(int personId);
 
+    List<Person> findByEmail(String email);
+
     boolean insertPerson(Person person);
 
 }

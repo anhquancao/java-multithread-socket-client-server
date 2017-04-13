@@ -105,6 +105,24 @@ public class PersonDAOImpl implements PersonDAO {
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, personId);
+            persons = getPersonsFromStatement(statement);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return persons;
+    }
+
+    @Override
+    public List<Person> findByEmail(String email) {
+        List<Person> persons = new ArrayList<>();
+        String sql = "SELECT * FROM person WHERE email = ?";
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, email);
+
+            persons = getPersonsFromStatement(statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }

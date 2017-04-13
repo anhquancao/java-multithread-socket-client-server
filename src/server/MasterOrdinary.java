@@ -58,6 +58,10 @@ public class MasterOrdinary extends Thread {
                         SlaveQueryPersons slaveQueryPersons = new SlaveQueryPersons(socket.getOutputStream(), splittedStr[1]);
                         service.submit(slaveQueryPersons);
                         break;
+                    case ActionTypes.UPDATE_PERSON:
+                        SlaveUpdatePerson slaveUpdatePerson = new SlaveUpdatePerson(socket.getOutputStream(), splittedStr[1]);
+                        service.submit(slaveUpdatePerson);
+                        break;
                 }
 
             } catch (IOException e) {

@@ -11,8 +11,6 @@ import java.util.List;
 public class PersonController extends Controller {
     private PersonDAO personDAO;
 
-    public static final String ALLTENANT = "ALLTENANT";
-
     public PersonController() {
         super();
         this.personDAO = this.daoFactory.getPersonDAO();
@@ -29,10 +27,17 @@ public class PersonController extends Controller {
     }
 
     public String createPerson(Person person) {
-        if (this.personDAO.insertPerson(person)) {
-            return "Person created";
+        if (this.personDAO.findByEmail(person.getEmail()).isEmpty()) {
+            if (this.personDAO.insertPerson(person)) {
+                int id = this.personDAO.findByEmail(person.getEmail()).get(0).getId();
+                System.out.println("hello world " + id);
+                return "success " + id;
+            } else {
+                return "Failed to create person";
+            }
         } else {
-            return "Failed to create person";
+            return "this email is existed";
         }
+
     }
 }

@@ -1,5 +1,7 @@
 package client;
 
+import utils.PersonType;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -9,6 +11,7 @@ import java.util.Scanner;
 public class ClientApplication {
     private TenantClient tenantClient;
     private RentalClient rentalClient;
+    private PersonClient personClient;
 
     private Scanner scanner;
     private UserInterface userInterface;
@@ -18,6 +21,7 @@ public class ClientApplication {
         tenantClient = new TenantClient();
         rentalClient = new RentalClient();
         userInterface = new UserInterface();
+        personClient = new PersonClient();
     }
 
 
@@ -109,35 +113,53 @@ public class ClientApplication {
 
     public void run() {
         while (true) {
-
-            // show main menu
-            // Are you a Tenant or Renter
-            // 1. Tenant
-            // 2. Renter
-            // 3. Exit
             userInterface.showMainMenu();
             int choice = getInputChoice();
             userInterface.showDelimiter();
             switch (choice) {
                 case 1:
-                    // choose option 1. Tenant
-                    handleTenant();
+                    //1. Login
+                    System.out.println("Login");
+//                    handleTenant();
                     break;
                 case 2:
-                    // choose option 2. Renter
-                    handleRenter();
+                    //2. Register new account
+                    if (personClient.createPerson()) {
+                        if (ClientContext.getInstance().getLoggedInPerson()
+                                .getPersonType().equals(PersonType.RENTER)) {
+                            handleRenter();
+                        } else {
+                            handleTenant();
+                        }
+                    }
                     break;
                 case 3:
-                    // Register account
-                    handleRegisterAccount();
-                    break;
-                case 4:
                     System.exit(0);
                     break;
                 default:
                     System.out.println("Your choice is not valid");
                     break;
             }
+//            switch (choice) {
+//                case 1:
+//                    // choose option 1. Tenant
+//                    handleTenant();
+//                    break;
+//                case 2:
+//                    // choose option 2. Renter
+//                    handleRenter();
+//                    break;
+//                case 3:
+//                    // Register account
+//                    handleRegisterAccount();
+//                    break;
+//                case 4:
+//                    System.exit(0);
+//                    break;
+//                default:
+//                    System.out.println("Your choice is not valid");
+//                    break;
+//            }
 
         }
     }

@@ -23,16 +23,16 @@ public class UserInterface {
 
     public void showMainMenu() {
         showDelimiter();
-        System.out.println("Are you a Tenant or Renter");
-        System.out.println("1. Tenant");
-        System.out.println("2. Renter");
-        System.out.println("3. Register a new account");
-        System.out.println("4. Exit");
+        System.out.println("Welcome to Rental Site");
+        System.out.println("1. Login");
+        System.out.println("2. Register a new account");
+        System.out.println("3. Exit");
         showChooseOptions(1, 3);
     }
 
     public void showTenantMenu() {
         showDelimiter();
+        System.out.println("Tenant Menu:");
         System.out.println("1. Request Rentals by criteria.");
         System.out.println("2. Reserve a rental.");
         System.out.println("3. Back");
@@ -41,6 +41,7 @@ public class UserInterface {
 
     public void showRenterMenu() {
         showDelimiter();
+        System.out.println("Renter Menu:");
         System.out.println("1. List of apartments proposed by Renter.");
         System.out.println("2. List of tenants by Renter.");
         System.out.println("3. Tenant of a Rental.");
@@ -59,5 +60,4 @@ public class UserInterface {
         System.out.println("4. Back");
         showChooseOptions(1, 4);
     }
-
 }

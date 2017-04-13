@@ -3,17 +3,10 @@ package client;
 import actions.RequestPersonAction;
 import actions.RequestRentalAction;
 
-import java.util.Scanner;
-
 /**
  * Created by caoquan on 4/5/17.
  */
 public class TenantClient extends Client {
-    Scanner sc;
-
-    public TenantClient() {
-        sc = new Scanner(System.in);
-    }
 
     public void requestAllAvailableRentals() {
         RequestRentalAction requestRentalAction = new RequestRentalAction(RequestRentalAction.ALL);

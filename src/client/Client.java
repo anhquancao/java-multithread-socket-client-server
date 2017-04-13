@@ -5,6 +5,7 @@ import utils.Constant;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.Scanner;
 
 /**
  * Created by caoquan on 4/11/17.
@@ -15,7 +16,13 @@ abstract public class Client {
     private BufferedWriter writer;
     private BufferedReader reader;
 
-    public void doAction(Action action) {
+    protected Scanner sc;
+
+    public Client() {
+        this.sc = new Scanner(System.in);
+    }
+
+    public String doAction(Action action) {
         try {
             System.out.println("Send request: " + action.command());
 
@@ -39,16 +46,19 @@ abstract public class Client {
             }
 
 //            String line = reader.readLine();
+            StringBuilder result = new StringBuilder();
             while (reader.ready()) {
                 String line = reader.readLine();
                 System.out.println(line);
 //                line = reader.readLine();
+                result.append(line);
             }
-
+            return result.toString();
         } catch (IOException e1) {
             e1.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        return null;
     }
 }

@@ -4,17 +4,10 @@ import actions.RequestApartmentAction;
 import actions.RequestPersonAction;
 import actions.RequestRentalAction;
 
-import java.util.Scanner;
-
 /**
  * Created by caoquan on 4/5/17.
  */
 public class RentalClient extends Client {
-    Scanner sc;
-
-    public RentalClient() {
-        sc = new Scanner(System.in);
-    }
 
     public void requestAllAvailableRentals() {
         RequestRentalAction requestRentalAction = new RequestRentalAction(RequestRentalAction.ALL);
@@ -22,14 +15,8 @@ public class RentalClient extends Client {
     }
 
     private String getRenterEmail() {
-        String email = null;
-        try {
-            System.out.print("Please input renter email: ");
-            email = sc.nextLine();
-        } catch (Exception e) {
-            System.out.println("Error: Please input an integer number");
-        }
-        return email;
+        return ClientHelper.getStringInput("Please input renter email: ",
+                "Error: Please input a valid email", this.sc);
     }
 
 

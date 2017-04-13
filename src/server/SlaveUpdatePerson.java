@@ -1,26 +1,32 @@
 package server;
 
-import actions.RequestPersonAction;
+import actions.UpdatePersonAction;
 import controllers.PersonController;
+import models.Person;
 import utils.Constant;
+import utils.PersonType;
 
 import java.io.*;
 
 /**
  * Created by dosontung on 4/9/17.
  */
-public class SlaveQueryPersons extends SlaveQuery {
-    private String param1;
-    private String param2;
+public class SlaveUpdatePerson extends SlaveQuery {
+    private String queryType;
+    private String email;
+    private PersonType type;
+    private String password;
     private PersonController personController;
     private BufferedWriter writer;
 
-    public SlaveQueryPersons(OutputStream outputStream, String params) {
+    public SlaveUpdatePerson(OutputStream outputStream, String params) {
         super(outputStream);
 
         String[] splittedParams = params.split(" ");
-        this.param1 = splittedParams[0];
-        this.param2 = splittedParams[1];
+        this.queryType = splittedParams[0];
+        this.email = splittedParams[1];
+        this.type = PersonType.valueOf(splittedParams[2]);
+        this.password = splittedParams[3];
 
         this.personController = new PersonController();
         try {
@@ -32,10 +38,12 @@ public class SlaveQueryPersons extends SlaveQuery {
 
     @Override
     public void run() {
-        switch (this.param1) {
-            case RequestPersonAction.ALLTENANT:
+        switch (this.queryType) {
+            case UpdatePersonAction.CREATE:
                 try {
-                    String results = this.personController.requestListAllTenantByRenter(this.param2);
+                    Person person = new Person(this.email, this.type);
+                    person.setPasswordHash(this.password);
+                    String results = this.personController.createPerson(person);
                     writer.write(results);
                     writer.newLine();
                     writer.flush();
