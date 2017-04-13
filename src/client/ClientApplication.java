@@ -119,8 +119,14 @@ public class ClientApplication {
             switch (choice) {
                 case 1:
                     //1. Login
-                    System.out.println("Login");
-//                    handleTenant();
+                    if (personClient.login()) {
+                        if (ClientContext.getInstance().getLoggedInPerson()
+                                .getPersonType().equals(PersonType.RENTER)) {
+                            handleRenter();
+                        } else {
+                            handleTenant();
+                        }
+                    }
                     break;
                 case 2:
                     //2. Register new account
@@ -167,8 +173,8 @@ public class ClientApplication {
 
     public static void main(String[] args) {
 //        TenantClient tenantClient = new TenantClient();
-//        ClientApplication application = new ClientApplication();
-//        application.run();
+        ClientApplication application = new ClientApplication();
+        application.run();
 
 //        clientApplication.run();
 
@@ -181,8 +187,8 @@ public class ClientApplication {
 //        client.requestTenantOfRental(1);
 //        client.requestNewRental(1);
 
-        RentalClient client = new RentalClient();
-        client.requestDeleteTenant(5);
+//        RentalClient client = new RentalClient();
+//        client.requestDeleteTenant(5);
 
     }
 }

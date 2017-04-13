@@ -131,6 +131,23 @@ public class PersonDAOImpl implements PersonDAO {
     }
 
     @Override
+    public List<Person> login(String email, String passwordHash) {
+        List<Person> persons = new ArrayList<>();
+        String sql = "SELECT * FROM person WHERE email = ? and password = ?";
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, email);
+            statement.setString(2, passwordHash);
+
+            persons = getPersonsFromStatement(statement);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return persons;
+    }
+
+    @Override
     public boolean insertPerson(Person person) {
         String sql = "INSERT INTO person (email, type, password) VALUES (?,?,?)";
 

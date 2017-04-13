@@ -26,6 +26,10 @@ public class Person {
         this.personType = personType;
     }
 
+    public Person(String email) {
+        this.email = email;
+    }
+
     public String getPasswordHash() {
         return passwordHash;
     }

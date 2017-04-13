@@ -40,4 +40,13 @@ public class PersonController extends Controller {
         }
 
     }
+
+    public String login(Person person) {
+        if (this.personDAO.login(person.getEmail(), person.getPasswordHash()).isEmpty()) {
+            return "Invalid Credential";
+        } else {
+            Person returnPerson = this.personDAO.findByEmail(person.getEmail()).get(0);
+            return "success " + returnPerson.getId() + " " + returnPerson.getPersonType();
+        }
+    }
 }

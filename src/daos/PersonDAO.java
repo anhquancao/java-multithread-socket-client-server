@@ -18,6 +18,8 @@ public interface PersonDAO {
 
     List<Person> findByEmail(String email);
 
+    List<Person> login(String email, String passwordHash);
+
     boolean insertPerson(Person person);
 
 }

@@ -1,5 +1,6 @@
 package client;
 
+import actions.LoginAction;
 import actions.RequestRentalAction;
 import actions.UpdatePersonAction;
 import models.Person;
@@ -13,6 +14,24 @@ public class PersonClient extends Client {
     public void requestAllAvailableRentals() {
         RequestRentalAction requestRentalAction = new RequestRentalAction(RequestRentalAction.ALL);
         doAction(requestRentalAction);
+    }
+
+    public boolean login() {
+        String email = ClientHelper.getStringInput("Please input email: ", "Invalid email", this.sc);
+        String password = ClientHelper.getStringInput("Please input your password: ", "Invalid password", this.sc);
+        LoginAction loginAction = new LoginAction(email, password);
+        String result = doAction(loginAction);
+        String[] parsedResult = result.split(" ");
+        if (parsedResult[0].equals("success")) {
+            int id = Integer.parseInt(parsedResult[1]);
+            Person loggedInPerson = new Person(id, email, PersonType.valueOf(parsedResult[2]));
+            ClientContext.getInstance().setLoggedInPerson(loggedInPerson);
+            System.out.println("Login Successfully");
+            return true;
+        } else {
+//            System.out.println(result);
+            return false;
+        }
     }
 
     public boolean createPerson() {
@@ -46,7 +65,7 @@ public class PersonClient extends Client {
             System.out.println("Person created successfully");
             return true;
         } else {
-            System.out.println(result);
+//            System.out.println(result);
             return false;
         }
 
