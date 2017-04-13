@@ -219,6 +219,24 @@ public class RentalDAOImpl implements RentalDAO {
     }
 
     @Override
+    public boolean reserveRental(Rental rental, int tenantId) {
+        String sql = "UPDATE rental SET tenant_id = ?,status = ? WHERE id = ?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setInt(1, tenantId);
+            statement.setString(2, RentalStatus.RENTING.toString());
+            statement.setInt(3, rental.getId());
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return true;
+    }
+
+    @Override
     public boolean insertRental(Rental rental) {
         String sql = "INSERT INTO rental (apartment_id,tenant_id,status) VALUES (?,?,?)";
         try {

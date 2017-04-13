@@ -187,8 +187,10 @@ public class ClientApplication {
 //        client.requestTenantOfRental(1);
 //        client.requestNewRental(1);
 
-//        RentalClient client = new RentalClient();
+
+        RentalClient client = new RentalClient();
 //        client.requestDeleteTenant(5);
+        client.requestReserve(2);
 
     }
 }
