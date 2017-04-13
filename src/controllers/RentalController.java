@@ -1,5 +1,7 @@
 package controllers;
 
+import Exceptions.RentalReservedException;
+import client.ClientContext;
 import daos.ApartmentDAO;
 import daos.RentalDAO;
 import models.Apartment;
@@ -52,7 +54,17 @@ public class RentalController extends Controller {
     public String requestDeleteRental(int rentalId) {
         Rental rental = this.rentalDAO.findById(rentalId).get(0);
         this.rentalDAO.deleteRental(rental);
-        return "Rental Deleted";
+        return "Rental deleted";
+    }
+
+    public String requestReserve(int apartmentId) throws RentalReservedException {
+        Rental rental = this.rentalDAO.findById(apartmentId).get(0);
+        if (rental.getTenant() != null) {
+            throw new RentalReservedException("This rental is not available for reserve");
+        }
+//        this.rentalDAO.reserveRental(rental, ClientContext.getInstance().getLoggedInPerson().getId());
+        this.rentalDAO.reserveRental(rental, 1);
+        return "Rental reserved";
     }
 
 }

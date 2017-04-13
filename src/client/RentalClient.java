@@ -38,4 +38,9 @@ public class RentalClient extends Client {
         doAction(requestRentalAction);
     }
 
+    public void requestReserve(int apartmentId) {
+        RequestRentalAction requestRentalAction = new RequestRentalAction(RequestRentalAction.RESERVE, apartmentId);
+        doAction(requestRentalAction);
+    }
+
 }
