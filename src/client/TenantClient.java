@@ -2,6 +2,7 @@ package client;
 
 import actions.RequestPersonAction;
 import actions.RequestRentalAction;
+import actions.ReserveRentalAction;
 
 /**
  * Created by caoquan on 4/5/17.
@@ -38,6 +39,17 @@ public class TenantClient extends Client {
         }
     }
 
+    public void reserveRental() {
+        try {
+            System.out.print("Please input the id of rental you want to reserve: ");
+            int rentalId = Integer.parseInt(sc.next());
+            ReserveRentalAction reserveRentalAction = new ReserveRentalAction(rentalId, ClientContext.getInstance().getLoggedInPerson().getId());
+            doAction(reserveRentalAction);
+        } catch (Exception exception) {
+            System.out.println("Error: Please input an integer number");
+        }
+
+    }
 
     public void requestListAllTenant() {
         RequestPersonAction requestPersonAction = new RequestPersonAction(RequestPersonAction.ALLTENANT);
@@ -53,5 +65,6 @@ public class TenantClient extends Client {
         RequestRentalAction requestRentalAction = new RequestRentalAction(RequestRentalAction.NEWRENTAL, apartmentId);
         doAction(requestRentalAction);
     }
+
 
 }

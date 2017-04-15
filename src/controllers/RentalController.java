@@ -56,14 +56,18 @@ public class RentalController extends Controller {
         return "Rental deleted";
     }
 
-    public String requestReserve(int apartmentId) throws RentalReservedException {
-        Rental rental = this.rentalDAO.findById(apartmentId).get(0);
+    public String requestReserve(int rentalId, int tenantId) throws RentalReservedException {
+        List<Rental> list = this.rentalDAO.findById(rentalId);
+        if (list.size() == 0) {
+            throw new RentalReservedException("This rental is not exist");
+        }
+        Rental rental = list.get(0);
         if (rental.getTenant() != null) {
             throw new RentalReservedException("This rental is not available for reserve");
         }
 //        this.rentalDAO.reserveRental(rental, ClientContext.getInstance().getLoggedInPerson().getId());
-        this.rentalDAO.reserveRental(rental, 1);
-        return "Rental reserved";
+        this.rentalDAO.reserveRental(rental, tenantId);
+        return "Rental reserved successfully";
     }
 
 }

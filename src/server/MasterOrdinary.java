@@ -44,6 +44,11 @@ public class MasterOrdinary extends Thread {
 
                 String command = splittedStr[0];
                 switch (command) {
+                    case ActionTypes.RESERVE_RENTAL:
+                        SlaveReserveRentals slaveReserveRentals =
+                                new SlaveReserveRentals(socket.getOutputStream(), splittedStr[1]);
+                        service.submit(slaveReserveRentals);
+                        break;
                     case ActionTypes.REQUEST_RENTAL:
                         SlaveQueryRentals slaveQueryRentals =
                                 new SlaveQueryRentals(socket.getOutputStream(), splittedStr[1]);

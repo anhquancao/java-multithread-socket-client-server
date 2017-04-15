@@ -2,7 +2,6 @@ package server;
 
 import actions.RequestRentalAction;
 import controllers.RentalController;
-import exceptions.RentalReservedException;
 import utils.Constant;
 
 import java.io.*;
@@ -92,18 +91,6 @@ public class SlaveQueryRentals extends SlaveQuery {
                     writer.newLine();
                     writer.flush();
                 } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                break;
-            case RequestRentalAction.RESERVE:
-                try {
-                    String results = this.rentalController.requestReserve(this.param2);
-                    writer.write(results);
-                    writer.newLine();
-                    writer.flush();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (RentalReservedException e) {
                     e.printStackTrace();
                 }
                 break;

@@ -74,6 +74,7 @@ public class ClientApplication {
 
                     break;
                 case 2:
+                    tenantClient.reserveRental();
                     break;
                 case 3:
                     check = 0;
@@ -186,11 +187,6 @@ public class ClientApplication {
 //        clientApplication.requestListAllTenant();
 //        client.requestTenantOfRental(1);
 //        client.requestNewRental(1);
-
-
-        RentalClient client = new RentalClient();
-//        client.requestDeleteTenant(5);
-        client.requestReserve(2);
 
     }
 }
