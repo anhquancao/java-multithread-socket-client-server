@@ -1,9 +1,8 @@
 package controllers;
 
-import Exceptions.RentalReservedException;
-import client.ClientContext;
 import daos.ApartmentDAO;
 import daos.RentalDAO;
+import exceptions.RentalReservedException;
 import models.Apartment;
 import models.Person;
 import models.Rental;

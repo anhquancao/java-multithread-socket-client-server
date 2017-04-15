@@ -1,8 +1,8 @@
 package server;
 
-import Exceptions.RentalReservedException;
 import actions.RequestRentalAction;
 import controllers.RentalController;
+import exceptions.RentalReservedException;
 import utils.Constant;
 
 import java.io.*;
@@ -34,7 +34,6 @@ public class SlaveQueryRentals extends SlaveQuery {
     public void run() {
         switch (this.param1) {
             case RequestRentalAction.ALL:
-                System.out.println("all");
                 try {
                     String results = this.rentalController.requestAllAvailableRentals();
                     writer.write(results);
@@ -102,9 +101,9 @@ public class SlaveQueryRentals extends SlaveQuery {
                     writer.write(results);
                     writer.newLine();
                     writer.flush();
-                } catch (RentalReservedException e) {
-                    e.printStackTrace();
                 } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (RentalReservedException e) {
                     e.printStackTrace();
                 }
                 break;

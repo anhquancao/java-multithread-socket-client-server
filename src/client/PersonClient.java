@@ -36,6 +36,9 @@ public class PersonClient extends Client {
 
     public boolean createPerson() {
         String email = ClientHelper.getStringInput("Please input email: ", "Invalid email", this.sc);
+        while (!ClientHelper.isValidEmailAddress(email)) {
+            email = ClientHelper.getStringInput("Your email is invalid, please reinput email: ", "Invalid email", this.sc);
+        }
         int typeChoice = -1;
         while (typeChoice != 1 && typeChoice != 2) {
             typeChoice = ClientHelper.getIntegerInput("Are you a Renter or Tenant?\n1. Renter \n2. Tenant\n3. Cancel" +

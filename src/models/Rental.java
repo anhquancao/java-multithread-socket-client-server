@@ -65,12 +65,17 @@ public class Rental {
         return tenant;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "Rental{" +
-                "status=" + status +
-                "," + apartment +
-                "," + tenant +
+                "id=" + id +
+                ", status=" + status +
+                ", apartment=" + apartment +
+                ", tenant=" + tenant +
                 '}';
     }
 }

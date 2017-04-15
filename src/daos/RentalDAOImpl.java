@@ -1,11 +1,9 @@
 package daos;
 
 import database.SQLiteJDBCDriverConnection;
-import models.Address;
 import models.Apartment;
 import models.Person;
 import models.Rental;
-import utils.ApartmentType;
 import utils.PersonType;
 import utils.RentalStatus;
 
@@ -31,14 +29,11 @@ public class RentalDAOImpl implements RentalDAO {
         this.apartmentDAO = apartmentDAO;
     }
 
-    @Override
-    public List<Rental> findAll() {
-        String sql = "SELECT * FROM rental";
+    public List<Rental> getRentalsFromStatement(PreparedStatement statement) {
         List<Rental> rentals = new ArrayList<>();
+        ResultSet result = null;
         try {
-            PreparedStatement statement = connection.prepareStatement(sql);
-            ResultSet result = statement.executeQuery();
-
+            result = statement.executeQuery();
             while (result.next()) {
                 Rental newRental = null;
                 Apartment newApartment = apartmentDAO.findById(result.getInt("apartment_id")).get(0);
@@ -48,10 +43,22 @@ public class RentalDAOImpl implements RentalDAO {
                     Person newPerson = personDAO.findById(result.getInt("tenant_id")).get(0);
                     newRental = new Rental(RentalStatus.valueOf(result.getString("status")), newApartment, newPerson);
                 }
-                System.out.println(newRental);
+                newRental.setId(result.getInt("id"));
                 rentals.add(newRental);
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rentals;
+    }
 
+    @Override
+    public List<Rental> findAll() {
+        String sql = "SELECT * FROM rental";
+        List<Rental> rentals = null;
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            rentals = getRentalsFromStatement(statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -62,26 +69,13 @@ public class RentalDAOImpl implements RentalDAO {
     @Override
     public List<Rental> findAllAvailable() {
         String sql = "SELECT * FROM rental WHERE status = ?";
-        List<Rental> rentals = new ArrayList<>();
+        List<Rental> rentals = null;
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
 
             statement.setString(1, RentalStatus.AVAILABLE.toString());
 
-            ResultSet result = statement.executeQuery();
-
-            while (result.next()) {
-                Rental newRental = null;
-                Apartment newApartment = apartmentDAO.findById(result.getInt("apartment_id")).get(0);
-                if (result.getInt("tenant_id") == 0) {
-                    newRental = new Rental(RentalStatus.valueOf(result.getString("status")), newApartment);
-                } else {
-                    Person newPerson = personDAO.findById(result.getInt("tenant_id")).get(0);
-                    newRental = new Rental(RentalStatus.valueOf(result.getString("status")), newApartment, newPerson);
-                }
-                System.out.println(newRental);
-                rentals.add(newRental);
-            }
+            rentals = getRentalsFromStatement(statement);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -93,26 +87,13 @@ public class RentalDAOImpl implements RentalDAO {
     @Override
     public List<Rental> findAllBelow(int amount) {
         String sql = "SELECT * FROM rental JOIN apartment ON rental.apartment_id = apartment.id WHERE  monthly_rent < ?";
-        List<Rental> rentals = new ArrayList<>();
+        List<Rental> rentals = null;
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
 
             statement.setInt(1, amount);
 
-            ResultSet result = statement.executeQuery();
-
-            while (result.next()) {
-                Rental newRental = null;
-                Apartment newApartment = apartmentDAO.findById(result.getInt("apartment_id")).get(0);
-                if (result.getInt("tenant_id") == 0) {
-                    newRental = new Rental(RentalStatus.valueOf(result.getString("status")), newApartment);
-                } else {
-                    Person newPerson = personDAO.findById(result.getInt("tenant_id")).get(0);
-                    newRental = new Rental(RentalStatus.valueOf(result.getString("status")), newApartment, newPerson);
-                }
-                System.out.println(newRental);
-                rentals.add(newRental);
-            }
+            rentals = getRentalsFromStatement(statement);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -123,28 +104,15 @@ public class RentalDAOImpl implements RentalDAO {
 
     @Override
     public List<Rental> findAllNumberOfRoom(int amount) {
-        String sql = "SELECT apartment_id, status, tenant_id FROM rental JOIN apartment ON rental.apartment_id = apartment.id WHERE apartment.num_rooms = ? AND rental.status = ?";
-        List<Rental> rentals = new ArrayList<>();
+        String sql = "SELECT rental.id as id, apartment_id, status, tenant_id FROM rental JOIN apartment ON rental.apartment_id = apartment.id WHERE apartment.num_rooms = ? AND rental.status = ?";
+        List<Rental> rentals = null;
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
 
             statement.setInt(1, amount);
             statement.setString(2, RentalStatus.AVAILABLE.toString());
 
-            ResultSet result = statement.executeQuery();
-
-            while (result.next()) {
-                Rental newRental = null;
-                Apartment newApartment = apartmentDAO.findById(result.getInt("apartment_id")).get(0);
-                if (result.getInt("tenant_id") == 0) {
-                    newRental = new Rental(RentalStatus.valueOf(result.getString("status")), newApartment);
-                } else {
-                    Person newPerson = personDAO.findById(result.getInt("tenant_id")).get(0);
-                    newRental = new Rental(RentalStatus.valueOf(result.getString("status")), newApartment, newPerson);
-                }
-                System.out.println(newRental);
-                rentals.add(newRental);
-            }
+            rentals = getRentalsFromStatement(statement);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -156,26 +124,13 @@ public class RentalDAOImpl implements RentalDAO {
     @Override
     public List<Rental> findById(int id) {
         String sql = "SELECT * FROM rental WHERE  id = ?";
-        List<Rental> rentals = new ArrayList<>();
+        List<Rental> rentals = null;
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
 
             statement.setInt(1, id);
 
-            ResultSet result = statement.executeQuery();
-
-            while (result.next()) {
-                Rental newRental = null;
-                Apartment newApartment = apartmentDAO.findById(result.getInt("apartment_id")).get(0);
-                if (result.getInt("tenant_id") == 0) {
-                    newRental = new Rental(result.getInt("id"), RentalStatus.valueOf(result.getString("status")), newApartment);
-                } else {
-                    Person newPerson = personDAO.findById(result.getInt("tenant_id")).get(0);
-                    newRental = new Rental(result.getInt("id"), RentalStatus.valueOf(result.getString("status")), newApartment, newPerson);
-                }
-//                System.out.println(newRental);
-                rentals.add(newRental);
-            }
+            rentals = getRentalsFromStatement(statement);
 
         } catch (SQLException e) {
             e.printStackTrace();

@@ -17,7 +17,7 @@ public class TenantClient extends Client {
 
         try {
             System.out.print("Please input the amount of monthly rent: ");
-            int amount = sc.nextInt();
+            int amount = Integer.parseInt(sc.next());
             RequestRentalAction requestRentalAction = new RequestRentalAction(RequestRentalAction.RENT, amount);
             doAction(requestRentalAction);
         } catch (Exception e) {
@@ -30,7 +30,7 @@ public class TenantClient extends Client {
     public void requestAllAvailableByNumRoom() {
         try {
             System.out.print("Please input the number of rooms: ");
-            int numRooms = sc.nextInt();
+            int numRooms = Integer.parseInt(sc.next());
             RequestRentalAction requestRentalAction = new RequestRentalAction(RequestRentalAction.ROOM, numRooms);
             doAction(requestRentalAction);
         } catch (Exception e) {
