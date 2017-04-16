@@ -29,6 +29,7 @@ public class SlaveQueryRentals extends SlaveQuery {
         }
     }
 
+
     @Override
     public void run() {
         switch (this.param1) {
@@ -44,6 +45,18 @@ public class SlaveQueryRentals extends SlaveQuery {
                 }
                 break;
             case RequestRentalAction.ALL:
+                try {
+                    String results = this.rentalController.requestAllRentals();
+                    writer.write(results);
+                    writer.newLine();
+                    writer.flush();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+
+            case RequestRentalAction.ALLAVAILABLE:
                 try {
                     String results = this.rentalController.requestAllAvailableRentals();
                     writer.write(results);

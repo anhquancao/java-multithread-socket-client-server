@@ -41,7 +41,7 @@ public class MasterOrdinary extends Thread {
 
                 // parse command
                 String[] splittedStr = input.split(" ", 2);
-
+                System.out.println(splittedStr[0] + " " +splittedStr[1]);
                 String command = splittedStr[0];
                 switch (command) {
                     case ActionTypes.UPDATE_RENTAL:
@@ -70,6 +70,7 @@ public class MasterOrdinary extends Thread {
                     case ActionTypes.LOGIN:
                         SlaveLogin slaveLogin = new SlaveLogin(socket.getOutputStream(), splittedStr[1]);
                         service.submit(slaveLogin);
+                        break;
                 }
 
             } catch (IOException e) {

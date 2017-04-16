@@ -1,5 +1,6 @@
 package client;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -37,4 +38,17 @@ public class ClientHelper {
         }
         return input;
     }
+
+    public static int getInputChoice() {
+        int choice = 0;
+        Scanner scanner = new Scanner(System.in);
+        try {
+            choice = scanner.nextInt();
+        } catch (InputMismatchException ex) {
+            System.out.println("Your Input is not valid");
+            scanner.next();
+        }
+        return choice;
+    }
+
 }

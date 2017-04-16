@@ -20,6 +20,12 @@ public class UpdateRentalAction extends Action {
         this.renterId = renterId;
     }
 
+    public UpdateRentalAction(String param1, int param2) {
+        super(ActionTypes.UPDATE_RENTAL);
+        this.param1 = param1;
+        this.param2 = param2;
+    }
+
     @Override
     public String command() {
         return getType() + " " + param1 + " " + param2 + " " + this.renterId;

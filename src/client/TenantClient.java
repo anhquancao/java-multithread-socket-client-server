@@ -11,7 +11,7 @@ import actions.UpdateRentalAction;
 public class TenantClient extends Client {
 
     public void requestAllAvailableRentals() {
-        RequestRentalAction requestRentalAction = new RequestRentalAction(RequestRentalAction.ALL);
+        RequestRentalAction requestRentalAction = new RequestRentalAction(RequestRentalAction.ALLAVAILABLE);
         doAction(requestRentalAction);
     }
 

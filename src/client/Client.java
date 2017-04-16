@@ -16,9 +16,12 @@ abstract public class Client {
     private BufferedWriter writer;
     private BufferedReader reader;
 
+    protected int port;
+
     protected Scanner sc;
 
     public Client() {
+        this.port = Constant.PORT;
         this.sc = new Scanner(System.in);
     }
 
@@ -26,7 +29,7 @@ abstract public class Client {
         try {
             System.out.println("Send request: " + action.command());
 
-            this.socket = new Socket("localhost", Constant.PORT);
+            this.socket = new Socket("localhost", this.port);
             this.writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), Constant.CHARSET));
             this.reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), Constant.CHARSET));
 

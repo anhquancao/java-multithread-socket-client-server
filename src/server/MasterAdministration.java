@@ -1,5 +1,6 @@
 package server;
 
+import actions.ActionTypes;
 import utils.Constant;
 
 import java.io.BufferedReader;
@@ -29,17 +30,26 @@ public class MasterAdministration extends Thread {
     }
 
     public void start() {
-        System.out.println("Server is listen at " + port);
+        System.out.println("Server Administration is listen at " + port);
         while (true) {
             try {
                 Socket socket = serverSocket.accept();
-                System.out.println("Accept");
+                System.out.print("Accepted request: ");
                 BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), Constant.CHARSET));
                 String input = reader.readLine();
-                String[] splittedStr = input.split(" ");
+                String[] splittedStr = input.split(" ", 2);
+                System.out.println(splittedStr[0] + " " + splittedStr[1]);
                 String command = splittedStr[0];
                 switch (command) {
-                  
+                    case ActionTypes.REQUEST_RENTAL:
+                        SlaveQueryRentals slaveQueryRentals = new SlaveQueryRentals(socket.getOutputStream(), splittedStr[1]);
+                        service.submit(slaveQueryRentals);
+                        break;
+                    case ActionTypes.UPDATE_RENTAL:
+                        SlaveUpdateRentals slaveUpdateRentals = new SlaveUpdateRentals(socket.getOutputStream(), splittedStr[1]);
+                        service.submit(slaveUpdateRentals);
+                        break;
+
                 }
 
             } catch (IOException e) {
@@ -49,7 +59,7 @@ public class MasterAdministration extends Thread {
     }
 
     public static void main(String args[]) {
-        MasterAdministration server = new MasterAdministration(Constant.PORT_2);
+        MasterAdministration server = new MasterAdministration(Constant.PORT_ADMINISTRATION);
         server.start();
     }
 }

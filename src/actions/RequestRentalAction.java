@@ -9,6 +9,7 @@ public class RequestRentalAction extends Action {
     private int param2;
 
     public static final String ALL = "ALL";
+    public static final String ALLAVAILABLE = "ALLAVAILABLE";
     public static final String RENT = "RENT";
     public static final String ROOM = "ROOM";
     public static final String RENTER = "RENTER";
