@@ -49,7 +49,7 @@ public class MasterAdministration extends Thread {
     }
 
     public static void main(String args[]) {
-        MasterAdministration server = new MasterAdministration(Constant.PORT);
+        MasterAdministration server = new MasterAdministration(Constant.PORT_2);
         server.start();
     }
 }
