@@ -29,7 +29,6 @@ public class ApartmentDAOImpl implements ApartmentDAO {
         this.personDAO = personDAO;
     }
 
-
     @Override
     public List<Apartment> findAll() {
         List<Apartment> apartments = new ArrayList<>();
@@ -37,16 +36,8 @@ public class ApartmentDAOImpl implements ApartmentDAO {
 
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
+            apartments = getApartmentsFromStatement(statement);
 
-            ResultSet result = statement.executeQuery();
-            while (result.next()) {
-                Address newAddress = addressDAO.findById(result.getInt("address_id")).get(0);
-                Person newPerson = personDAO.findById(result.getInt("renter_id")).get(0);
-                Apartment newApartment = new Apartment(result.getInt("id"), newAddress, result.getInt("num_rooms"), result.getInt("monthly_rent"), newPerson, ApartmentType.valueOf(result.getString("type")));
-
-                apartments.add(newApartment);
-
-            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -155,6 +146,11 @@ public class ApartmentDAOImpl implements ApartmentDAO {
     }
 
     @Override
+    public List<Apartment> findApartmentsOfRenter(int renterId) {
+        return null;
+    }
+
+    @Override
     public boolean insertApartment(Apartment apartment) {
         String sql = "INSERT INTO apartment (address_id, num_rooms, monthly_rent, renter_id, type) VALUES (?,?,?,?,?)";
 
@@ -206,6 +202,25 @@ public class ApartmentDAOImpl implements ApartmentDAO {
             e.printStackTrace();
         }
         return true;
+    }
+
+    @Override
+    public List<Apartment> findAvailableByRenterIdForPropose(int renterId) {
+        List<Apartment> apartments = null;
+        String sql = "SELECT * from apartment where renter_id=? AND " +
+                "id not in (select apartment_id from rental where status = ? or status = ? )";
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, renterId);
+            statement.setString(2, RentalStatus.AVAILABLE.toString());
+            statement.setString(3, RentalStatus.RENTING.toString());
+            apartments = getApartmentsFromStatement(statement);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return apartments;
     }
 
     public static void main(String agrs[]) {

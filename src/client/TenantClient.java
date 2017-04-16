@@ -1,8 +1,9 @@
 package client;
 
+import actions.Action;
 import actions.RequestPersonAction;
 import actions.RequestRentalAction;
-import actions.ReserveRentalAction;
+import actions.UpdateRentalAction;
 
 /**
  * Created by caoquan on 4/5/17.
@@ -43,7 +44,7 @@ public class TenantClient extends Client {
         try {
             System.out.print("Please input the id of rental you want to reserve: ");
             int rentalId = Integer.parseInt(sc.next());
-            ReserveRentalAction reserveRentalAction = new ReserveRentalAction(rentalId, ClientContext.getInstance().getLoggedInPerson().getId());
+            Action reserveRentalAction = new UpdateRentalAction(UpdateRentalAction.RESERVE_RENTAL, rentalId, ClientContext.getInstance().getLoggedInPerson().getId());
             doAction(reserveRentalAction);
         } catch (Exception exception) {
             System.out.println("Error: Please input an integer number");
@@ -68,10 +69,6 @@ public class TenantClient extends Client {
 
     }
 
-    public void requestNewRental(int apartmentId) {
-        RequestRentalAction requestRentalAction = new RequestRentalAction(RequestRentalAction.NEWRENTAL, apartmentId);
-        doAction(requestRentalAction);
-    }
 
 
 }

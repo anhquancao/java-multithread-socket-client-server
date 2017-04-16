@@ -16,13 +16,24 @@ public class ApartmentController extends Controller {
         this.apartmentDAO = this.daoFactory.getApartmentDAO();
     }
 
-    public String requestAllApartmentOfRenter(String email) {
-        List<Apartment> apartments = this.apartmentDAO.findByRenterEmail(email);
+    public String requestAllApartmentOfRenter(int renterId) {
+        List<Apartment> apartments = this.apartmentDAO.findByRenterId(renterId);
+        if (apartments.size() == 0) {
+            return "empty";
+        }
         return renderResult(apartments);
     }
 
-    public String requestAllAvailableApartmentOfRenter(int renterId){
+    public String requestAllAvailableApartmentOfRenter(int renterId) {
         List<Apartment> apartments = this.apartmentDAO.findAvailableByRenterId(renterId);
+        return renderResult(apartments);
+    }
+
+    public String requestAllApartmentOfRenterForPropose(int renterId) {
+        List<Apartment> apartments = this.apartmentDAO.findAvailableByRenterIdForPropose(renterId);
+        if (apartments.size() == 0) {
+            return "empty";
+        }
         return renderResult(apartments);
     }
 }

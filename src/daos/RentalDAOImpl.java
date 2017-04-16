@@ -216,7 +216,7 @@ public class RentalDAOImpl implements RentalDAO {
             statement.setInt(2, rental.getTenant().getId());
             statement.setString(3, rental.getStatus().toString());
 
-            statement.executeQuery();
+            statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -244,10 +244,11 @@ public class RentalDAOImpl implements RentalDAO {
     }
 
     @Override
-    public boolean deleteRental(Rental rental) {
+    public boolean deleteRental(int rentalId) {
         String sql = "DELETE FROM rental WHERE id = ?";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, rentalId);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

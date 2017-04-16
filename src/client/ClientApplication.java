@@ -99,8 +99,10 @@ public class ClientApplication {
                     tenantClient.requestTenantOfRental();
                     break;
                 case 4:
+                    rentalClient.proposeNewRental();
                     break;
                 case 5:
+                    rentalClient.removeRental();
                     break;
                 case 6:
                     renterCheck = 0;
