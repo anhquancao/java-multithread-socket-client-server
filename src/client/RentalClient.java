@@ -1,6 +1,9 @@
 package client;
 
 import actions.*;
+import models.Address;
+import models.Apartment;
+import utils.ApartmentType;
 
 /**
  * Created by caoquan on 4/5/17.
@@ -56,6 +59,51 @@ public class RentalClient extends Client {
                 System.out.println("Error: Please input an integer number");
             }
 
+        }
+
+    }
+
+    public void addApartment() {
+        try {
+            System.out.print("Please input street: ");
+            String street = sc.next();
+            System.out.print("Please input postal code: ");
+            int postalCode = Integer.parseInt(sc.next());
+            System.out.print("Please input number of room: ");
+            int numRooms = Integer.parseInt(sc.next());
+            System.out.print("Please input monthly rent: ");
+            int monthlyRent = Integer.parseInt(sc.next());
+            int choice = 0;
+            while (choice < 1 || choice > 4) {
+                System.out.println("Please select type of apartment (1 to 4)");
+                System.out.println("1. Duplex");
+                System.out.println("2. Loft");
+                System.out.println("3. Room");
+                System.out.println("4. Other");
+                System.out.print("Please input from 1 to 4: ");
+                choice = Integer.parseInt(sc.next());
+            }
+            ApartmentType type = null;
+            switch (choice) {
+                case 1:
+                    type = ApartmentType.DUPLEX;
+                    break;
+                case 2:
+                    type = ApartmentType.LOFT;
+                    break;
+                case 3:
+                    type = ApartmentType.ROOM;
+                    break;
+                case 4:
+                    type = ApartmentType.OTHER;
+                    break;
+            }
+            Address address = new Address(street, postalCode);
+            Apartment apartment = new Apartment(address, numRooms, monthlyRent, ClientContext.getInstance().getLoggedInPerson(), type);
+            Action action = new UpdateApartmentAction(UpdateApartmentAction.NEW, apartment.toCommandString());
+            doAction(action);
+        } catch (Exception e) {
+            System.out.println("Error: Please input an integer number");
         }
 
     }

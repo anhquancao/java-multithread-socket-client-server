@@ -1,6 +1,5 @@
 package daos;
 
-import database.SQLiteJDBCDriverConnection;
 import models.Address;
 import models.Apartment;
 import models.Person;
@@ -12,7 +11,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -152,12 +150,13 @@ public class ApartmentDAOImpl implements ApartmentDAO {
 
     @Override
     public boolean insertApartment(Apartment apartment) {
+        int addressId = this.addressDAO.insertAddress(apartment.getAddress());
         String sql = "INSERT INTO apartment (address_id, num_rooms, monthly_rent, renter_id, type) VALUES (?,?,?,?,?)";
 
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
 
-            statement.setInt(1, apartment.getAddress().getId());
+            statement.setInt(1, addressId);
             statement.setInt(2, apartment.getNumRooms());
             statement.setInt(3, apartment.getMonthlyRent());
             statement.setInt(4, apartment.getRenter().getId());
@@ -221,18 +220,5 @@ public class ApartmentDAOImpl implements ApartmentDAO {
         }
 
         return apartments;
-    }
-
-    public static void main(String agrs[]) {
-        Connection connection = SQLiteJDBCDriverConnection.getInstance().getConnection();
-        ApartmentDAOImpl test = new ApartmentDAOImpl(connection, new AddressDAOImpl(connection), new PersonDAOImpl(connection));
-        List<Apartment> apartments = test.findById(2);
-//        test.findAll();
-
-        List<Apartment> apartments2 = test.findAvailableByRenterId(4);
-        for (Iterator<Apartment> i = apartments2.iterator(); i.hasNext(); ) {
-            Apartment item = i.next();
-            System.out.println(item);
-        }
     }
 }

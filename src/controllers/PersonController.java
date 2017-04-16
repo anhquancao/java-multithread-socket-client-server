@@ -21,6 +21,10 @@ public class PersonController extends Controller {
         return renderResult(tenants);
     }
 
+    public Person getPersonById(int id) {
+        return this.personDAO.findById(id).get(0);
+    }
+
     public String requestListAllTenantByRenter(int renterId) {
         List<Person> tenants = this.personDAO.findAllTenantByRenterId(renterId);
         return renderResult(tenants);

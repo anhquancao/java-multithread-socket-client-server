@@ -12,7 +12,7 @@ public interface AddressDAO {
 
     List<Address> findById(int id);
 
-    boolean insertAddress(Address address);
+    int insertAddress(Address address);
 
     boolean updateAddress(Address address);
 
