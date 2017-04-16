@@ -96,6 +96,7 @@ public class ClientApplication {
                     rentalClient.requestTenantsOfRenter();
                     break;
                 case 3:
+                    tenantClient.requestTenantOfRental();
                     break;
                 case 4:
                     break;

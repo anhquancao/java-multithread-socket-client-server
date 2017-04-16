@@ -27,8 +27,7 @@ public class RentalClient extends Client {
     }
 
     public void requestTenantsOfRenter() {
-        String email = getRenterEmail();
-        Action requestPersonAction = new RequestPersonAction(RequestPersonAction.ALLTENANT, email);
+        Action requestPersonAction = new RequestPersonAction(RequestPersonAction.ALLTENANT, ClientContext.getInstance().getLoggedInPerson().getId());
         doAction(requestPersonAction);
     }
 

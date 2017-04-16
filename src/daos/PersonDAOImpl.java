@@ -79,16 +79,14 @@ public class PersonDAOImpl implements PersonDAO {
     }
 
     @Override
-    public List<Person> findAllTenantByRenter(String email) {
+    public List<Person> findAllTenantByRenterId(int renterId) {
         List<Person> persons = null;
         String sql = "SELECT * FROM person where id in " +
                 "(select tenant_id from rental where apartment_id in " +
-                "(select id from apartment where renter_id in " +
-                "(select id from person where email = ?)))";
-
+                "(select id from apartment where renter_id=?))";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, email);
+            statement.setInt(1, renterId);
             persons = getPersonsFromStatement(statement);
         } catch (SQLException e) {
             e.printStackTrace();

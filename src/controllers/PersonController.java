@@ -21,8 +21,8 @@ public class PersonController extends Controller {
         return renderResult(tenants);
     }
 
-    public String requestListAllTenantByRenter(String email) {
-        List<Person> tenants = this.personDAO.findAllTenantByRenter(email);
+    public String requestListAllTenantByRenter(int renterId) {
+        List<Person> tenants = this.personDAO.findAllTenantByRenterId(renterId);
         return renderResult(tenants);
     }
 
@@ -30,7 +30,6 @@ public class PersonController extends Controller {
         if (this.personDAO.findByEmail(person.getEmail()).isEmpty()) {
             if (this.personDAO.insertPerson(person)) {
                 int id = this.personDAO.findByEmail(person.getEmail()).get(0).getId();
-                System.out.println("hello world " + id);
                 return "success " + id;
             } else {
                 return "Failed to create person";

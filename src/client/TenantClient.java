@@ -56,9 +56,16 @@ public class TenantClient extends Client {
         doAction(requestPersonAction);
     }
 
-    public void requestTenantOfRental(int rentalId) {
-        RequestRentalAction requestRentalAction = new RequestRentalAction(RequestRentalAction.TENANT, rentalId);
-        doAction(requestRentalAction);
+    public void requestTenantOfRental() {
+        try {
+            System.out.print("Please input the id of rental( you can get it from option 1): ");
+            int rentalId = Integer.parseInt(sc.next());
+            RequestRentalAction requestRentalAction = new RequestRentalAction(RequestRentalAction.TENANT, rentalId);
+            doAction(requestRentalAction);
+        } catch (Exception exception) {
+            System.out.println("Error: Please input an integer number");
+        }
+
     }
 
     public void requestNewRental(int apartmentId) {

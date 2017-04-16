@@ -11,7 +11,7 @@ import java.io.*;
  */
 public class SlaveQueryPersons extends SlaveQuery {
     private String param1;
-    private String param2;
+    private int param2;
     private PersonController personController;
     private BufferedWriter writer;
 
@@ -20,7 +20,7 @@ public class SlaveQueryPersons extends SlaveQuery {
 
         String[] splittedParams = params.split(" ");
         this.param1 = splittedParams[0];
-        this.param2 = splittedParams[1];
+        this.param2 = Integer.parseInt(splittedParams[1]);
 
         this.personController = new PersonController();
         try {
