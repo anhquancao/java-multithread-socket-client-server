@@ -28,6 +28,11 @@ public class RentalController extends Controller {
         return renderResult(rentals);
     }
 
+    public String requestRentalsByRenter(int renterId) {
+        List<Rental> rentals = this.rentalDAO.findByRenterId(renterId);
+        return renderResult(rentals);
+    }
+
     public String requestRentalBelowRent(int rent) {
         List<Rental> rentals = this.rentalDAO.findAllBelow(rent);
         return renderResult(rentals);

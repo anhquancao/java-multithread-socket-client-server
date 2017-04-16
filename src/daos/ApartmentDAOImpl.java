@@ -45,7 +45,7 @@ public class ApartmentDAOImpl implements ApartmentDAO {
                 Apartment newApartment = new Apartment(result.getInt("id"), newAddress, result.getInt("num_rooms"), result.getInt("monthly_rent"), newPerson, ApartmentType.valueOf(result.getString("type")));
 
                 apartments.add(newApartment);
-//                System.out.println(newApartment);
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -111,11 +111,17 @@ public class ApartmentDAOImpl implements ApartmentDAO {
         try {
             ResultSet result = statement.executeQuery();
             while (result.next()) {
+
                 Address newAddress = addressDAO.findById(result.getInt("address_id")).get(0);
                 Person newPerson = personDAO.findById(result.getInt("renter_id")).get(0);
-                Apartment newApartment = new Apartment(result.getInt("id"), newAddress, result.getInt("num_rooms"), result.getInt("monthly_rent"), newPerson, ApartmentType.valueOf(result.getString("type")));
+
+                Apartment newApartment = new Apartment(result.getInt("id"),
+                        newAddress, result.getInt("num_rooms"), result.getInt("monthly_rent"),
+                        newPerson,
+                        ApartmentType.valueOf(result.getString("type")));
 
                 apartments.add(newApartment);
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -209,7 +215,7 @@ public class ApartmentDAOImpl implements ApartmentDAO {
 //        test.findAll();
 
         List<Apartment> apartments2 = test.findAvailableByRenterId(4);
-        for(Iterator<Apartment> i = apartments2.iterator(); i.hasNext(); ) {
+        for (Iterator<Apartment> i = apartments2.iterator(); i.hasNext(); ) {
             Apartment item = i.next();
             System.out.println(item);
         }

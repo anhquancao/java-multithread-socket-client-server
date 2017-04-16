@@ -19,6 +19,8 @@ public interface RentalDAO {
 
     List<Rental> findById(int id);
 
+    List<Rental> findByRenterId(int renterId);
+
     List<Person> findTenantOfRental(int id);
 
     boolean reserveRental(Rental rental, int tenantId);

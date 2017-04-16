@@ -11,6 +11,7 @@ public class RequestRentalAction extends Action {
     public static final String ALL = "ALL";
     public static final String RENT = "RENT";
     public static final String ROOM = "ROOM";
+    public static final String RENTER = "RENTER";
     public static final String TENANT = "TENANT";
     public static final String NEWRENTAL = "NEWRENTAL";
     public static final String DELETERENTAL = "DELETERENTAL";

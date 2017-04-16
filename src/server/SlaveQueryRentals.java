@@ -32,6 +32,17 @@ public class SlaveQueryRentals extends SlaveQuery {
     @Override
     public void run() {
         switch (this.param1) {
+            case RequestRentalAction.RENTER:
+                try {
+                    String results = this.rentalController.requestRentalsByRenter(this.param2);
+                    writer.write(results);
+                    writer.newLine();
+                    writer.flush();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
             case RequestRentalAction.ALL:
                 try {
                     String results = this.rentalController.requestAllAvailableRentals();

@@ -1,6 +1,6 @@
 package client;
 
-import actions.RequestApartmentAction;
+import actions.Action;
 import actions.RequestPersonAction;
 import actions.RequestRentalAction;
 
@@ -20,21 +20,20 @@ public class RentalClient extends Client {
     }
 
 
-    public void requestApartmentOfRenter() {
-        String email = getRenterEmail();
-        RequestApartmentAction requestApartmentAction = new RequestApartmentAction(RequestApartmentAction.RENTER, email);
-        doAction(requestApartmentAction);
+    public void requestRentalOfRenter() {
+        Action requestRentalAction = new RequestRentalAction(RequestRentalAction.RENTER, ClientContext.getInstance().getLoggedInPerson().getId());
+        doAction(requestRentalAction);
 
     }
 
     public void requestTenantsOfRenter() {
         String email = getRenterEmail();
-        RequestPersonAction requestPersonAction = new RequestPersonAction(RequestPersonAction.ALLTENANT, email);
+        Action requestPersonAction = new RequestPersonAction(RequestPersonAction.ALLTENANT, email);
         doAction(requestPersonAction);
     }
 
     public void requestDeleteTenant(int tenantId) {
-        RequestRentalAction requestRentalAction = new RequestRentalAction(RequestRentalAction.DELETERENTAL, tenantId);
+        Action requestRentalAction = new RequestRentalAction(RequestRentalAction.DELETERENTAL, tenantId);
         doAction(requestRentalAction);
     }
 

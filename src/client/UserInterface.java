@@ -42,7 +42,7 @@ public class UserInterface {
     public void showRenterMenu() {
         showDelimiter();
         System.out.println("Renter Menu:");
-        System.out.println("1. List of apartments proposed by Renter.");
+        System.out.println("1. List of Rentals proposed");
         System.out.println("2. List of tenants by Renter.");
         System.out.println("3. Tenant of a Rental.");
         System.out.println("4. Propose a new rental");

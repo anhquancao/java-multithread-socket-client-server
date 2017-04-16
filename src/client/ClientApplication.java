@@ -90,7 +90,7 @@ public class ClientApplication {
             int renterChoice = getInputChoice();
             switch (renterChoice) {
                 case 1:
-                    rentalClient.requestApartmentOfRenter();
+                    rentalClient.requestRentalOfRenter();
                     break;
                 case 2:
                     rentalClient.requestTenantsOfRenter();

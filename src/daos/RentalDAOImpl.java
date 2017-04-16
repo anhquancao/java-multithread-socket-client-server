@@ -32,11 +32,13 @@ public class RentalDAOImpl implements RentalDAO {
     public List<Rental> getRentalsFromStatement(PreparedStatement statement) {
         List<Rental> rentals = new ArrayList<>();
         ResultSet result = null;
+
         try {
             result = statement.executeQuery();
             while (result.next()) {
                 Rental newRental = null;
                 Apartment newApartment = apartmentDAO.findById(result.getInt("apartment_id")).get(0);
+
                 if (result.getInt("tenant_id") == 0) {
                     newRental = new Rental(RentalStatus.valueOf(result.getString("status")), newApartment);
                 } else {
@@ -44,6 +46,7 @@ public class RentalDAOImpl implements RentalDAO {
                     newRental = new Rental(RentalStatus.valueOf(result.getString("status")), newApartment, newPerson);
                 }
                 newRental.setId(result.getInt("id"));
+                System.out.println(newRental);
                 rentals.add(newRental);
             }
         } catch (SQLException e) {
@@ -90,9 +93,7 @@ public class RentalDAOImpl implements RentalDAO {
         List<Rental> rentals = null;
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
-
             statement.setInt(1, amount);
-
             rentals = getRentalsFromStatement(statement);
 
         } catch (SQLException e) {
@@ -127,9 +128,23 @@ public class RentalDAOImpl implements RentalDAO {
         List<Rental> rentals = null;
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
-
             statement.setInt(1, id);
+            rentals = getRentalsFromStatement(statement);
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return rentals;
+    }
+
+    @Override
+    public List<Rental> findByRenterId(int renterId) {
+        String sql = "SELECT * FROM rental WHERE apartment_id in (select id from apartment where renter_id = ?)";
+        List<Rental> rentals = null;
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, renterId);
             rentals = getRentalsFromStatement(statement);
 
         } catch (SQLException e) {
