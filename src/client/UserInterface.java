@@ -47,8 +47,9 @@ public class UserInterface {
         System.out.println("3. Tenant of a Rental.");
         System.out.println("4. Propose a new rental");
         System.out.println("5. Remove a rental");
-        System.out.println("6. Back");
-        showChooseOptions(1, 6);
+        System.out.println("6. Add new apartment");
+        System.out.println("7. Back");
+        showChooseOptions(1, 7);
 
     }
 

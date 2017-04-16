@@ -105,6 +105,9 @@ public class ClientApplication {
                     rentalClient.removeRental();
                     break;
                 case 6:
+                    rentalClient.addApartment();
+                    break;
+                case 7:
                     renterCheck = 0;
                     break;
             }

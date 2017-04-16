@@ -65,4 +65,12 @@ public class Apartment {
                 ", type=" + type +
                 '}';
     }
+
+    public String toCommandString() {
+        return address.getStreet() + "," + address.getPostalCode() +
+                "," + numRooms +
+                "," + monthlyRent +
+                "," + renter.getId() +
+                "," + type;
+    }
 }

@@ -36,4 +36,9 @@ public class ApartmentController extends Controller {
         }
         return renderResult(apartments);
     }
+
+    public String addApartment(Apartment apartment) {
+        this.apartmentDAO.insertApartment(apartment);
+        return "Apartment added";
+    }
 }

@@ -3,10 +3,7 @@ package daos;
 import database.SQLiteJDBCDriverConnection;
 import models.Address;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,10 +61,11 @@ public class AddressDAOImpl implements AddressDAO {
     }
 
     @Override
-    public boolean insertAddress(Address address) {
+    public int insertAddress(Address address) {
         String sql = "INSERT INTO address (street, postal) VALUES (?,?)";
+        PreparedStatement statement = null;
         try {
-            PreparedStatement statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, address.getStreet());
             statement.setInt(2, address.getPostalCode());
 
@@ -75,7 +73,13 @@ public class AddressDAOImpl implements AddressDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return true;
+        int id = 0;
+        try {
+            id = statement.getGeneratedKeys().getInt(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return id;
     }
 
     @Override
@@ -113,7 +117,7 @@ public class AddressDAOImpl implements AddressDAO {
         test.findAll();
         test.findById(2);
 
-        Address newAddress = new Address(8,"Hanoi", 100000);
+        Address newAddress = new Address(8, "Hanoi", 100000);
 //        Address newAddress2 = new Address(7, "Sai Gon", 250000);
 //        test.insertAddress(newAddress);
 //        test.findAll();

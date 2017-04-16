@@ -11,4 +11,5 @@ public class ActionTypes {
     public static final String LOGIN = "login";
     public static final String RESERVE_RENTAL = "reserveRental";
     public static final String UPDATE_RENTAL = "updateRental";
+    public static final String UPDATE_APARTMENT = "updateApartment";
 }
