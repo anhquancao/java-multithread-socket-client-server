@@ -30,6 +30,10 @@ public class Person {
         this.email = email;
     }
 
+    public Person(int id) {
+        this.id = id;
+    }
+
     public String getPasswordHash() {
         return passwordHash;
     }

@@ -18,9 +18,13 @@ public interface ApartmentDAO {
 
     List<Apartment> findAvailableByRenterId(int id);
 
+    List<Apartment> findApartmentsOfRenter(int renterId);
+
     boolean insertApartment(Apartment apartment);
 
     boolean updateApartment(Apartment apartment);
 
     boolean deleteAparment(Apartment apartment);
+
+    List<Apartment> findAvailableByRenterIdForPropose(int renterId);
 }

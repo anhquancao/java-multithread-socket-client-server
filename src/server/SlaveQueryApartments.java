@@ -33,11 +33,19 @@ public class SlaveQueryApartments extends SlaveQuery {
     @Override
     public void run() {
         switch (this.param1) {
-            case RequestApartmentAction.ALL:
+            case RequestApartmentAction.FOR_PROPOSE:
+                try {
+                    String results = this.apartmentController.requestAllApartmentOfRenterForPropose(Integer.parseInt(this.param2));
+                    writer.write(results);
+                    writer.newLine();
+                    writer.flush();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 break;
             case RequestApartmentAction.RENTER:
                 try {
-                    String results = this.apartmentController.requestAllApartmentOfRenter(this.param2);
+                    String results = this.apartmentController.requestAllApartmentOfRenter(Integer.parseInt(this.param2));
                     writer.write(results);
                     writer.newLine();
                     writer.flush();

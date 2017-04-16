@@ -48,17 +48,38 @@ public class RentalController extends Controller {
         return renderResult(tenants);
     }
 
-    public String requestNewRental(int apartmentId) {
-        Apartment apartment = apartmentDAO.findById(apartmentId).get(0);
-        Rental rental = new Rental(RentalStatus.AVAILABLE, apartment);
-        this.rentalDAO.insertRental(rental);
-        return "Created new rental";
+    public String requestNewRental(int apartmentId, int renterId) {
+        List<Apartment> list = apartmentDAO.findById(apartmentId);
+        if (list.size() == 0) {
+            return "This Apartment is not existed";
+        } else {
+            Apartment apartment = list.get(0);
+            if (apartment.getRenter().getId() == renterId) {
+                Rental rental = new Rental(RentalStatus.AVAILABLE, apartment,new Person(renterId));
+                this.rentalDAO.insertRental(rental);
+                return "New rental created";
+            } else {
+                return "This apartment does not belong to you";
+            }
+
+        }
+
     }
 
-    public String requestDeleteRental(int rentalId) {
-        Rental rental = this.rentalDAO.findById(rentalId).get(0);
-        this.rentalDAO.deleteRental(rental);
-        return "Rental deleted";
+    public String requestDeleteRental(int rentalId, int renterId) {
+        List<Rental> list = this.rentalDAO.findById(rentalId);
+        if (list.size() == 0) {
+            return "This Rental is not existed";
+        } else {
+            Rental rental = list.get(0);
+            if (rental.getApartment().getRenter().getId() == renterId) {
+                this.rentalDAO.deleteRental(rentalId);
+                return "Rental deleted";
+            } else {
+                return "This Rental is not belong to you";
+            }
+
+        }
     }
 
     public String requestReserve(int rentalId, int tenantId) throws RentalReservedException {

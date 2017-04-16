@@ -1,8 +1,6 @@
 package client;
 
-import actions.Action;
-import actions.RequestPersonAction;
-import actions.RequestRentalAction;
+import actions.*;
 
 /**
  * Created by caoquan on 4/5/17.
@@ -31,9 +29,34 @@ public class RentalClient extends Client {
         doAction(requestPersonAction);
     }
 
-    public void requestDeleteTenant(int tenantId) {
-        Action requestRentalAction = new RequestRentalAction(RequestRentalAction.DELETERENTAL, tenantId);
-        doAction(requestRentalAction);
+    public void removeRental() {
+        try {
+            System.out.print("Please input the id of rental (you can get it from option 1): ");
+            int rentalId = Integer.parseInt(sc.next());
+            Action action = new UpdateRentalAction(UpdateRentalAction.DELETE_RENTAL, rentalId, ClientContext.getInstance().getLoggedInPerson().getId());
+            doAction(action);
+        } catch (Exception exception) {
+            System.out.println("Error: Please input an integer number");
+        }
     }
 
+    public void proposeNewRental() {
+        System.out.println("Your apartments that are not proposed:");
+        Action getAllRenterApartmentsForProposed = new RequestApartmentAction(RequestApartmentAction.FOR_PROPOSE, ClientContext.getInstance().getLoggedInPerson().getId());
+        String result = doAction(getAllRenterApartmentsForProposed);
+        if (result.equals("empty")) {
+            System.out.println("You dont have any apartment to propose, you need to add apartment first");
+        } else {
+            try {
+                System.out.print("Please input the id of apartment that you want to propose: ");
+                int apartmentId = Integer.parseInt(sc.next());
+                Action action = new UpdateRentalAction(UpdateRentalAction.NEW_RENTAL, apartmentId, ClientContext.getInstance().getLoggedInPerson().getId());
+                doAction(action);
+            } catch (Exception exception) {
+                System.out.println("Error: Please input an integer number");
+            }
+
+        }
+
+    }
 }

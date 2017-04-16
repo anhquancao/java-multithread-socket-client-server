@@ -29,5 +29,5 @@ public interface RentalDAO {
 
     boolean updateRental(Rental rental);
 
-    boolean deleteRental(Rental rental);
+    boolean deleteRental(int rentalId);
 }
