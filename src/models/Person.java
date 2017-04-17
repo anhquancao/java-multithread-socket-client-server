@@ -68,6 +68,7 @@ public class Person {
                 "id=" + id +
                 ", email='" + email + '\'' +
                 ", personType=" + personType +
+                ", passwordHash='" + passwordHash + '\'' +
                 '}';
     }
 

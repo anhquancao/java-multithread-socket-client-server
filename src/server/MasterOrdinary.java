@@ -3,11 +3,13 @@ package server;
 import actions.ActionTypes;
 import utils.Constant;
 
+import javax.net.ssl.*;
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.security.*;
+import java.security.cert.CertificateException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -15,13 +17,51 @@ import java.util.concurrent.Executors;
  * Created by caoquan on 4/4/17.
  */
 public class MasterOrdinary extends Thread {
-    private ServerSocket serverSocket;
+    private SSLServerSocket sslServerSocket;
     private ExecutorService service;
     private int port;
 
     public MasterOrdinary(int port) {
         try {
-            serverSocket = new ServerSocket(port);
+            KeyManagerFactory kmf = null;
+            SSLContext context = null;
+            try {
+                context = SSLContext.getInstance("SSLv3");
+                kmf = KeyManagerFactory.getInstance("SunX509");
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
+            KeyStore ks = null;
+            try {
+                ks = KeyStore.getInstance("JKS");
+            } catch (KeyStoreException e) {
+                e.printStackTrace();
+            }
+            char[] passPhrase = Constant.PASSWORD.toCharArray();
+            try {
+                ks.load(new FileInputStream("certi"), passPhrase);
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            } catch (CertificateException e) {
+                e.printStackTrace();
+            }
+            try {
+                kmf.init(ks, passPhrase);
+            } catch (KeyStoreException e) {
+                e.printStackTrace();
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            } catch (UnrecoverableKeyException e) {
+                e.printStackTrace();
+            }
+            try {
+                context.init(kmf.getKeyManagers(), null, null);
+            } catch (KeyManagementException e) {
+                e.printStackTrace();
+            }
+            SSLServerSocketFactory factory =
+                    context.getServerSocketFactory();
+            sslServerSocket = (SSLServerSocket) factory.createServerSocket(port);
             this.port = port;
             service = Executors.newFixedThreadPool(4);
         } catch (IOException e) {
@@ -33,16 +73,17 @@ public class MasterOrdinary extends Thread {
         System.out.println("Server Master Ordinary is listen at " + port);
         while (true) {
             try {
-                Socket socket = serverSocket.accept();
+                SSLSocket socket = (SSLSocket) sslServerSocket.accept();
                 System.out.println("Accept");
                 BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), Constant.CHARSET));
+
                 // Read command
                 String input = reader.readLine();
 
                 // parse command
                 String[] splittedStr = input.split(" ", 2);
-
                 String command = splittedStr[0];
+
                 switch (command) {
                     case ActionTypes.UPDATE_RENTAL:
                         SlaveUpdateRentals slaveUpdateRentals =

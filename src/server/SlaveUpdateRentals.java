@@ -46,19 +46,12 @@ public class SlaveUpdateRentals extends SlaveQuery {
 
     @Override
     public void run() {
+        String results = "";
         switch (this.criteria) {
             case UpdateRentalAction.NEW_RENTAL:
-                try {
-                    String results = this.rentalController.requestNewRental(this.param1, this.param2);
-                    writer.write(results);
-                    writer.newLine();
-                    writer.flush();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                results = this.rentalController.requestNewRental(this.param1, this.param2);
                 break;
             case UpdateRentalAction.RESERVE_RENTAL:
-                String results = null;
                 try {
                     results = this.rentalController.requestReserve(this.param1, this.param2);
                 } catch (RentalReservedException e) {
@@ -87,29 +80,13 @@ public class SlaveUpdateRentals extends SlaveQuery {
                     System.out.println("Message cannot be sent due to lack of SMTP server");
                 }
 
-
-                try {
-                    writer.write(results);
-                    writer.newLine();
-                    writer.flush();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
                 break;
 
             case UpdateRentalAction.DELETE_RENTAL:
-                String deleteResults = null;
-                deleteResults = this.rentalController.requestDeleteRental(this.param1, this.param2);
-                try {
-                    writer.write(deleteResults);
-                    writer.newLine();
-                    writer.flush();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                results = this.rentalController.requestDeleteRental(this.param1, this.param2);
                 break;
 
         }
-
+        writeData(results);
     }
 }

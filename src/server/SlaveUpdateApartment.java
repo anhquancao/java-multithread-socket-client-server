@@ -38,24 +38,19 @@ public class SlaveUpdateApartment extends SlaveQuery {
 
     @Override
     public void run() {
+        String results = "";
         switch (this.queryType) {
             case UpdateApartmentAction.NEW:
-                try {
-                    String[] splittedBody = this.body.split(",");
-                    Address address = new Address(splittedBody[0], Integer.parseInt(splittedBody[1]));
-                    int renterId = Integer.parseInt(splittedBody[4]);
-                    Person person = new Person(renterId);
-                    int numRooms = Integer.parseInt(splittedBody[2]);
-                    int monthlyRent = Integer.parseInt(splittedBody[3]);
-                    Apartment apartment = new Apartment(address, numRooms, monthlyRent, person, ApartmentType.valueOf(splittedBody[5]));
-                    String result = this.apartmentController.addApartment(apartment);
-                    writer.write(result);
-                    writer.newLine();
-                    writer.flush();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                String[] splittedBody = this.body.split(",");
+                Address address = new Address(splittedBody[0], Integer.parseInt(splittedBody[1]));
+                int renterId = Integer.parseInt(splittedBody[4]);
+                Person person = new Person(renterId);
+                int numRooms = Integer.parseInt(splittedBody[2]);
+                int monthlyRent = Integer.parseInt(splittedBody[3]);
+                Apartment apartment = new Apartment(address, numRooms, monthlyRent, person, ApartmentType.valueOf(splittedBody[5]));
+                results = this.apartmentController.addApartment(apartment);
                 break;
         }
+        writeData(results);
     }
 }

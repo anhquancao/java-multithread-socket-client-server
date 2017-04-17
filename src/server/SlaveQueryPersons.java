@@ -32,17 +32,12 @@ public class SlaveQueryPersons extends SlaveQuery {
 
     @Override
     public void run() {
+        String results = "";
         switch (this.param1) {
             case RequestPersonAction.ALLTENANT:
-                try {
-                    String results = this.personController.requestListAllTenantByRenter(this.param2);
-                    writer.write(results);
-                    writer.newLine();
-                    writer.flush();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                results = this.personController.requestListAllTenantByRenter(this.param2);
                 break;
         }
+        writeData(results);
     }
 }

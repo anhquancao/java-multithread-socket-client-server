@@ -31,60 +31,25 @@ public class SlaveQueryRentals extends SlaveQuery {
 
     @Override
     public void run() {
+        String results = "";
         switch (this.param1) {
             case RequestRentalAction.RENTER:
-                try {
-                    String results = this.rentalController.requestRentalsByRenter(this.param2);
-                    writer.write(results);
-                    writer.newLine();
-                    writer.flush();
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                results = this.rentalController.requestRentalsByRenter(this.param2);
                 break;
             case RequestRentalAction.ALL:
-                try {
-                    String results = this.rentalController.requestAllAvailableRentals();
-                    writer.write(results);
-                    writer.newLine();
-                    writer.flush();
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                results = this.rentalController.requestAllAvailableRentals();
                 break;
             case RequestRentalAction.RENT:
-                try {
-                    String results = this.rentalController.requestRentalBelowRent(this.param2);
-                    writer.write(results);
-                    writer.newLine();
-                    writer.flush();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+
+                results = this.rentalController.requestRentalBelowRent(this.param2);
                 break;
             case RequestRentalAction.ROOM:
-                try {
-                    String results = this.rentalController.requestRenterByNumberOfRooms(this.param2);
-                    writer.write(results);
-                    writer.newLine();
-                    writer.flush();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
+                results = this.rentalController.requestRenterByNumberOfRooms(this.param2);
                 break;
             case RequestRentalAction.TENANT:
-                try {
-                    String results = this.rentalController.requestTenantOfRental(this.param2);
-                    writer.write(results);
-                    writer.newLine();
-                    writer.flush();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                results = this.rentalController.requestTenantOfRental(this.param2);
                 break;
         }
+        writeData(results);
     }
 }

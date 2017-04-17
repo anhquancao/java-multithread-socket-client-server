@@ -38,19 +38,14 @@ public class SlaveUpdatePerson extends SlaveQuery {
 
     @Override
     public void run() {
+        String results = "";
         switch (this.queryType) {
             case UpdatePersonAction.CREATE:
-                try {
-                    Person person = new Person(this.email, this.type);
-                    person.setPasswordHash(this.password);
-                    String results = this.personController.createPerson(person);
-                    writer.write(results);
-                    writer.newLine();
-                    writer.flush();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                Person person = new Person(this.email, this.type);
+                person.setPasswordHash(this.password);
+                results = this.personController.createPerson(person);
                 break;
         }
+        writeData(results);
     }
 }
