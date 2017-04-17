@@ -147,6 +147,7 @@ public class ClientApplication {
                     }
                     break;
                 case 3:
+                    userInterface.showGoodBye();
                     System.exit(0);
                     break;
                 default:

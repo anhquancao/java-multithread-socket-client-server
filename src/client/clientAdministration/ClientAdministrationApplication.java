@@ -41,6 +41,9 @@ public class ClientAdministrationApplication {
                     userInterface.showGoodBye();
                     System.exit(0);
                     break;
+                default:
+                    System.out.println("Your choice in invalid");
+                    break;
             }
         }
     }
