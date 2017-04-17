@@ -1,6 +1,5 @@
 package daos;
 
-import database.SQLiteJDBCDriverConnection;
 import models.Apartment;
 import models.Person;
 import models.Rental;
@@ -11,6 +10,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +34,7 @@ public class RentalDAOImpl implements RentalDAO {
     public List<Rental> getRentalsFromStatement(PreparedStatement statement) {
         List<Rental> rentals = new ArrayList<>();
         ResultSet result = null;
-
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         try {
             result = statement.executeQuery();
             while (result.next()) {
@@ -46,10 +48,20 @@ public class RentalDAOImpl implements RentalDAO {
                     newRental = new Rental(RentalStatus.valueOf(result.getString("status")), newApartment, newPerson);
                 }
                 newRental.setId(result.getInt("id"));
+
+                if (result.getString("start_date") != null) {
+                    newRental.setStartDate(df.parse(result.getString("start_date")));
+                }
+                if (result.getString("end_date") != null) {
+                    newRental.setEndDate(df.parse(result.getString("end_date")));
+                }
+
                 System.out.println(newRental);
                 rentals.add(newRental);
             }
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
             e.printStackTrace();
         }
         return rentals;
@@ -105,7 +117,9 @@ public class RentalDAOImpl implements RentalDAO {
 
     @Override
     public List<Rental> findAllNumberOfRoom(int amount) {
-        String sql = "SELECT rental.id as id, apartment_id, status, tenant_id FROM rental JOIN apartment ON rental.apartment_id = apartment.id WHERE apartment.num_rooms = ? AND rental.status = ?";
+        String sql = "SELECT rental.id as id, apartment_id, status, tenant_id, startDate, endDate " +
+                "FROM rental JOIN apartment ON rental.apartment_id = apartment.id " +
+                "WHERE apartment.num_rooms = ? AND rental.status = ?";
         List<Rental> rentals = null;
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -190,13 +204,16 @@ public class RentalDAOImpl implements RentalDAO {
 
     @Override
     public boolean reserveRental(Rental rental, int tenantId) {
-        String sql = "UPDATE rental SET tenant_id = ?,status = ? WHERE id = ?";
+        String sql = "UPDATE rental SET tenant_id = ?,status = ?, start_date=?, end_date=? WHERE id = ?";
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
 
             statement.setInt(1, tenantId);
             statement.setString(2, RentalStatus.RENTING.toString());
-            statement.setInt(3, rental.getId());
+            statement.setString(3, df.format(rental.getStartDate()));
+            statement.setString(4, df.format(rental.getEndDate()));
+            statement.setInt(5, rental.getId());
 
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -257,18 +274,5 @@ public class RentalDAOImpl implements RentalDAO {
         return true;
     }
 
-    public static void main(String[] args) {
-        Connection connection = SQLiteJDBCDriverConnection.getInstance().getConnection();
-        RentalDAOImpl test = new RentalDAOImpl(connection,
-                new PersonDAOImpl(connection), new ApartmentDAOImpl(connection, new AddressDAOImpl(connection), new PersonDAOImpl(connection)));
-//        test.findAll();
-//        test.findAllBelow(1600);
-//        test.findAllNumberOfRoom(3);
-//        System.out.println("\n");
-        Rental rental = test.findById(3).get(0);
-        test.findTenantOfRental(rental.getId());
-//        test.findAllAvailable();
-
-    }
 
 }

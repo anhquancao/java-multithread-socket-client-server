@@ -1,6 +1,5 @@
 package controllers;
 
-import actions.RequestRentalAction;
 import daos.ApartmentDAO;
 import daos.RentalDAO;
 import exceptions.RentalReservedException;
@@ -9,6 +8,7 @@ import models.Person;
 import models.Rental;
 import utils.RentalStatus;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -88,12 +88,14 @@ public class RentalController extends Controller {
         }
     }
 
-    public String requestReserve(int rentalId, int tenantId) throws RentalReservedException {
+    public String requestReserve(int rentalId, int tenantId, Date startDate, Date endDate) throws RentalReservedException {
         List<Rental> list = this.rentalDAO.findById(rentalId);
         if (list.size() == 0) {
             throw new RentalReservedException("This rental is not exist");
         }
         Rental rental = list.get(0);
+        rental.setStartDate(startDate);
+        rental.setEndDate(endDate);
         if (rental.getTenant() != null) {
             throw new RentalReservedException("This rental is not available for reserve");
         }

@@ -8,6 +8,7 @@ public class UpdateRentalAction extends Action {
 
     private int param2;
     private int renterId;
+    private String param3;
 
     public static final String DELETE_RENTAL = "DELETE_RENTAL";
     public static final String NEW_RENTAL = "NEW_RENTAL";
@@ -20,6 +21,14 @@ public class UpdateRentalAction extends Action {
         this.renterId = renterId;
     }
 
+    public UpdateRentalAction(String param1, int param2, int renterId, String param3) {
+        super(ActionTypes.UPDATE_RENTAL);
+        this.param1 = param1;
+        this.param2 = param2;
+        this.renterId = renterId;
+        this.param3 = param3;
+    }
+
     public UpdateRentalAction(String param1, int param2) {
         super(ActionTypes.UPDATE_RENTAL);
         this.param1 = param1;
@@ -28,6 +37,6 @@ public class UpdateRentalAction extends Action {
 
     @Override
     public String command() {
-        return getType() + " " + param1 + " " + param2 + " " + this.renterId;
+        return getType() + " " + param1 + " " + param2 + " " + this.renterId + " " + this.param3;
     }
 }

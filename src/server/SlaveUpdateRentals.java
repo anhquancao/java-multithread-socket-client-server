@@ -14,6 +14,9 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Properties;
 
 /**
@@ -22,6 +25,7 @@ import java.util.Properties;
 public class SlaveUpdateRentals extends SlaveQuery {
     private int param1;
     private int param2;
+    private String param3;
     private String criteria;
 
     private BufferedWriter writer;
@@ -34,6 +38,9 @@ public class SlaveUpdateRentals extends SlaveQuery {
         this.criteria = splittedParams[0];
         this.param1 = Integer.parseInt(splittedParams[1]);
         this.param2 = Integer.parseInt(splittedParams[2]);
+        if (splittedParams.length == 4) {
+            this.param3 = splittedParams[3];
+        }
 
         this.rentalController = new RentalController();
         this.personController = new PersonController();
@@ -52,8 +59,21 @@ public class SlaveUpdateRentals extends SlaveQuery {
                 results = this.rentalController.requestNewRental(this.param1, this.param2);
                 break;
             case UpdateRentalAction.RESERVE_RENTAL:
+                String[] splittedStringDate = this.param3.split(",");
+                String startDateString = splittedStringDate[0];
+                String endDateString = splittedStringDate[1];
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                Date startDate = null;
+                Date endDate = null;
                 try {
-                    results = this.rentalController.requestReserve(this.param1, this.param2);
+                    startDate = df.parse(startDateString);
+                    endDate = df.parse(endDateString);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    results = this.rentalController.requestReserve(this.param1, this.param2, startDate, endDate);
                 } catch (RentalReservedException e) {
                     results = e.getMessage();
                 }

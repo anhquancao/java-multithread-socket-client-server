@@ -5,6 +5,10 @@ import actions.RequestPersonAction;
 import actions.RequestRentalAction;
 import actions.UpdateRentalAction;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by caoquan on 4/5/17.
  */
@@ -44,7 +48,27 @@ public class TenantClient extends Client {
         try {
             System.out.print("Please input the id of rental you want to reserve: ");
             int rentalId = Integer.parseInt(sc.next());
-            Action reserveRentalAction = new UpdateRentalAction(UpdateRentalAction.RESERVE_RENTAL, rentalId, ClientContext.getInstance().getLoggedInPerson().getId());
+
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            Date startDate = null, endDate = null;
+            try {
+                System.out.print("Please input the start date (yyyy-MM-dd): ");
+                String startDateString = sc.next();
+                startDate = df.parse(startDateString);
+                System.out.print("Please input the end date (yyyy-MM-dd): ");
+                String endDateString = sc.next();
+                endDate = df.parse(endDateString);
+            } catch (Exception e) {
+                System.out.println("Date is invalid. Please input using the format yyyy-MM-dd");
+            }
+
+            try {
+
+            } catch (Exception e) {
+                System.out.println("Date is invalid. Please input using the format yyyy-MM-dd");
+            }
+            Action reserveRentalAction = new UpdateRentalAction(UpdateRentalAction.RESERVE_RENTAL, rentalId,
+                    ClientContext.getInstance().getLoggedInPerson().getId(), df.format(startDate) + "," + df.format(endDate));
             doAction(reserveRentalAction);
         } catch (Exception exception) {
             System.out.println("Error: Please input an integer number");
@@ -68,7 +92,6 @@ public class TenantClient extends Client {
         }
 
     }
-
 
 
 }
