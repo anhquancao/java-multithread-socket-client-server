@@ -8,6 +8,14 @@ public class UserInterface {
         System.out.println("===================================");
     }
 
+    public void showWelcomeAdmin() {
+        System.out.println("Welcome to Administration Client");
+    }
+
+    public void showGoodBye() {
+        System.out.println("\n===========See you again===========");
+    }
+
     public void showChooseOptions(int start, int end) {
         StringBuilder stringBuilder = new StringBuilder("Please choose options ");
         for (int i = start; i < end; i++) {
@@ -60,5 +68,13 @@ public class UserInterface {
         System.out.println("3. All available rental monthly with number of rooms.");
         System.out.println("4. Back");
         showChooseOptions(1, 4);
+    }
+
+    public void showAdminMainMenu() {
+        showDelimiter();
+        System.out.println("1. List of Rental");
+        System.out.println("2. Delete a Rental");
+        System.out.println("3. Exit");
+        showChooseOptions(1, 3);
     }
 }

@@ -18,9 +18,12 @@ abstract public class Client {
     private BufferedWriter writer;
     private BufferedReader reader;
 
+    protected int port;
+
     protected Scanner sc;
 
     public Client() {
+        this.port = Constant.PORT;
         this.sc = new Scanner(System.in);
     }
 
@@ -34,12 +37,13 @@ abstract public class Client {
             SSLSocketFactory factory =
                     (SSLSocketFactory) SSLSocketFactory.getDefault();
             System.out.println("Send request: " + action.command());
-
-            this.sslSocket = (SSLSocket) factory.createSocket("localhost", Constant.PORT);
+            
+            this.sslSocket = (SSLSocket) factory.createSocket("localhost", this.port);
 
             InputStream inputStream = sslSocket.getInputStream();
             this.writer = new BufferedWriter(new OutputStreamWriter(sslSocket.getOutputStream(), Constant.CHARSET));
             this.reader = new BufferedReader(new InputStreamReader(inputStream, Constant.CHARSET));
+
 
             this.writer.write(action.command());
             this.writer.newLine();

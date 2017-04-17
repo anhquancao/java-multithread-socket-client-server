@@ -1,5 +1,6 @@
 package controllers;
 
+import actions.RequestRentalAction;
 import daos.ApartmentDAO;
 import daos.RentalDAO;
 import exceptions.RentalReservedException;
@@ -21,6 +22,11 @@ public class RentalController extends Controller {
         super();
         this.rentalDAO = this.daoFactory.getRentalDAO();
         this.apartmentDAO = this.daoFactory.getApartmentDAO();
+    }
+
+    public String requestAllRentals() {
+        List<Rental> rentals = this.rentalDAO.findAll();
+        return renderResult(rentals);
     }
 
     public String requestAllAvailableRentals() {
@@ -55,7 +61,7 @@ public class RentalController extends Controller {
         } else {
             Apartment apartment = list.get(0);
             if (apartment.getRenter().getId() == renterId) {
-                Rental rental = new Rental(RentalStatus.AVAILABLE, apartment,new Person(renterId));
+                Rental rental = new Rental(RentalStatus.AVAILABLE, apartment, new Person(renterId));
                 this.rentalDAO.insertRental(rental);
                 return "New rental created";
             } else {

@@ -24,18 +24,18 @@ public class ClientApplication {
         personClient = new PersonClient();
     }
 
-
-    public int getInputChoice() {
-        int choice = 0;
-        try {
-            choice = scanner.nextInt();
-        } catch (InputMismatchException ex) {
-            userInterface.showDelimiter();
-            System.out.println("Your Input is not valid");
-            scanner.next();
-        }
-        return choice;
-    }
+//
+//    public int ClientHelper.getInputChoice() {
+//        int choice = 0;
+//        try {
+//            choice = scanner.nextInt();
+//        } catch (InputMismatchException ex) {
+//            userInterface.showDelimiter();
+//            System.out.println("Your Input is not valid");
+//            scanner.next();
+//        }
+//        return choice;
+//    }
 
 
     private void handleTenant() {
@@ -45,14 +45,14 @@ public class ClientApplication {
 
             // show tenant menu
             userInterface.showTenantMenu();
-            int tenantChoice = getInputChoice();
+            int tenantChoice = ClientHelper.getInputChoice();
             switch (tenantChoice) {
                 case 1:
                     int criteriaCheck = 1;
                     while (criteriaCheck == 1) {
                         // show criteria menu
                         userInterface.showCriteriaMenu();
-                        int criteriaChoice = getInputChoice();
+                        int criteriaChoice = ClientHelper.getInputChoice();
                         switch (criteriaChoice) {
                             case 1:
                                 // 1. Request all available rental
@@ -87,7 +87,7 @@ public class ClientApplication {
         int renterCheck = 1;
         while (renterCheck == 1) {
             userInterface.showRenterMenu();
-            int renterChoice = getInputChoice();
+            int renterChoice = ClientHelper.getInputChoice();
             switch (renterChoice) {
                 case 1:
                     rentalClient.requestRentalOfRenter();
@@ -121,7 +121,7 @@ public class ClientApplication {
     public void run() {
         while (true) {
             userInterface.showMainMenu();
-            int choice = getInputChoice();
+            int choice = ClientHelper.getInputChoice();
             userInterface.showDelimiter();
             switch (choice) {
                 case 1:
@@ -147,6 +147,7 @@ public class ClientApplication {
                     }
                     break;
                 case 3:
+                    userInterface.showGoodBye();
                     System.exit(0);
                     break;
                 default:

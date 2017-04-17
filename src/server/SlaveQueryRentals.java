@@ -29,6 +29,7 @@ public class SlaveQueryRentals extends SlaveQuery {
         }
     }
 
+
     @Override
     public void run() {
         String results = "";
@@ -37,6 +38,9 @@ public class SlaveQueryRentals extends SlaveQuery {
                 results = this.rentalController.requestRentalsByRenter(this.param2);
                 break;
             case RequestRentalAction.ALL:
+                results = this.rentalController.requestAllRentals();
+                break;
+            case RequestRentalAction.ALLAVAILABLE:
                 results = this.rentalController.requestAllAvailableRentals();
                 break;
             case RequestRentalAction.RENT:

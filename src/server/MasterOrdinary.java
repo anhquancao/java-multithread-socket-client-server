@@ -79,9 +79,11 @@ public class MasterOrdinary extends Thread {
 
                 // Read command
                 String input = reader.readLine();
+                System.out.println(input);
 
                 // parse command
                 String[] splittedStr = input.split(" ", 2);
+
                 String command = splittedStr[0];
 
                 switch (command) {
@@ -116,6 +118,7 @@ public class MasterOrdinary extends Thread {
                     case ActionTypes.LOGIN:
                         SlaveLogin slaveLogin = new SlaveLogin(socket.getOutputStream(), splittedStr[1]);
                         service.submit(slaveLogin);
+                        break;
                 }
 
             } catch (IOException e) {
