@@ -35,7 +35,7 @@ public class ClientAdministration extends Client {
     }
 
     public void requestDeleteRental(int rentalId) {
-        Action updateRentalAction = new UpdateRentalAction(UpdateRentalAction.DELETE_RENTAL, rentalId);
+        Action updateRentalAction = new UpdateRentalAction(UpdateRentalAction.ADMIN_DELETE_RENTAL, rentalId);
         doAction(updateRentalAction);
     }
 

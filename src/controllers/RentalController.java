@@ -72,6 +72,17 @@ public class RentalController extends Controller {
 
     }
 
+    public String requestAdminDeleteRental(int rentalId, int renterId) {
+        List<Rental> list = this.rentalDAO.findById(rentalId);
+        if (list.size() == 0) {
+            return "This Rental is not existed";
+        } else {
+            Rental rental = list.get(0);
+            this.rentalDAO.deleteRental(rentalId);
+            return "Rental deleted";
+        }
+    }
+
     public String requestDeleteRental(int rentalId, int renterId) {
         List<Rental> list = this.rentalDAO.findById(rentalId);
         if (list.size() == 0) {

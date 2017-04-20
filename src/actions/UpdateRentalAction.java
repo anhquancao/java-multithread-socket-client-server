@@ -11,6 +11,7 @@ public class UpdateRentalAction extends Action {
     private String param3;
 
     public static final String DELETE_RENTAL = "DELETE_RENTAL";
+    public static final String ADMIN_DELETE_RENTAL = "ADMIN_DELETE_RENTAL";
     public static final String NEW_RENTAL = "NEW_RENTAL";
     public static final String RESERVE_RENTAL = "RESERVE_RENTAL";
 

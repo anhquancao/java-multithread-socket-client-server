@@ -105,6 +105,9 @@ public class SlaveUpdateRentals extends SlaveQuery {
             case UpdateRentalAction.DELETE_RENTAL:
                 results = this.rentalController.requestDeleteRental(this.param1, this.param2);
                 break;
+            case UpdateRentalAction.ADMIN_DELETE_RENTAL:
+                results = this.rentalController.requestAdminDeleteRental(this.param1, this.param2);
+                break;
 
         }
         writeData(results);
