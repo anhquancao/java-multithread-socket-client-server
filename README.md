@@ -98,5 +98,3 @@ Unlike the Casual Client, Administration Client will have the right to access to
 - Renter: email: renter@gmail.com, password: 12345678
 - Tenant: email: tenant@gmail.com, password: 12345678
 
-## Link to project
-https://github.com/caoquan95/java-multithread-socket-client-server
