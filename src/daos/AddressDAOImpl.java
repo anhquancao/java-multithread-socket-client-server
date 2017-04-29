@@ -1,6 +1,5 @@
 package daos;
 
-import database.SQLiteJDBCDriverConnection;
 import models.Address;
 
 import java.sql.*;
@@ -112,19 +111,4 @@ public class AddressDAOImpl implements AddressDAO {
         return true;
     }
 
-    public static void main(String agrs[]) {
-        AddressDAO test = new AddressDAOImpl(SQLiteJDBCDriverConnection.getInstance().getConnection());
-        test.findAll();
-        test.findById(2);
-
-        Address newAddress = new Address(8, "Hanoi", 100000);
-//        Address newAddress2 = new Address(7, "Sai Gon", 250000);
-//        test.insertAddress(newAddress);
-//        test.findAll();
-//        test.updateAddress(newAddress2);
-//        test.findAll();
-        test.deleteAddress(newAddress);
-        test.findAll();
-
-    }
 }

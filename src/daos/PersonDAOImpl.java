@@ -1,6 +1,5 @@
 package daos;
 
-import database.SQLiteJDBCDriverConnection;
 import models.Person;
 import models.Renter;
 import models.Tenant;
@@ -161,11 +160,5 @@ public class PersonDAOImpl implements PersonDAO {
             e.printStackTrace();
         }
         return true;
-    }
-
-    public static void main(String args[]) {
-        PersonDAOImpl test = new PersonDAOImpl(SQLiteJDBCDriverConnection.getInstance().getConnection());
-        test.findById(1);
-        test.findAll();
     }
 }

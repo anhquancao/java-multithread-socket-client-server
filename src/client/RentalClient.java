@@ -66,7 +66,7 @@ public class RentalClient extends Client {
     public void addApartment() {
         try {
             System.out.print("Please input street: ");
-            String street = sc.next();
+            String street = sc.nextLine().replaceAll("\\s+","_");
             System.out.print("Please input postal code: ");
             int postalCode = Integer.parseInt(sc.next());
             System.out.print("Please input number of room: ");
