@@ -14,7 +14,7 @@ This client is used to access to the server to request several information which
 
 From this Client Application, in order to request information from the server, you need to authorized with the specific account, or you need to register one.
 
-*For testing purpose, you can use example accounts provided below to access to the server*
+(*For testing purpose, you can use example accounts provided below to access to the server*)
 
 The client will be separate to 2 types: Tenant Client, and Renter Client
 
@@ -26,15 +26,17 @@ The client will be separate to 2 types: Tenant Client, and Renter Client
 2. Reserve an available rental for a exact duration
 
 **Renter Client** will be able to:
-1. List the rental of his/her apartments.
-2. Check the information about a rental (A Tenant of a Rental).
-3. Create new rental or remove one.
-4. A new apartment can be created by renter.
+1. List all the rental of his/her apartments.
+2. List all the tenant of a renter.
+3. Check the information about a rental (A Tenant of a Rental).
+4. Create new rental.
+5. Remove a rental.
+6. A new apartment can be created by renter.
 
 ### Administration Client Application
 Unlike the Casual Client, Administration Client will have the right to access to the server and do several actions dedicated to the admin.
-- Show the list of all the rental
-- The admin can have the right to directly delete a rental.
+1. Show the list of all the rental
+2. The admin can have the right to directly delete a rental.
 
  
 
