@@ -1,4 +1,4 @@
-# Devoir/ Rental Site in Java 
+# Java Devoir 2017: Rental Site 
 
 ## Members:
 - **CAO** Anh Quân
