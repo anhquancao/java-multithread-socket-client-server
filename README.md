@@ -7,6 +7,12 @@
 
 ## How to run the application
 
+### Entry points:
+1. Normal server: server.ServerApplication
+2. Normal client: client.ClientApplication
+3. Administration server: server.MasterAdministration
+4. Administration client: client.ClientAdministrationApplication
+
 ### Run the normal server and normal client
 1. Open new terminal.
 2. Change the current directory to the production directory:
